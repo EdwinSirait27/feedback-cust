@@ -1,0 +1,35 @@
+{
+  "common": {
+    "back": "前のページへ戻る",
+    "giveMore": "より多くの情報を入力すると当選のチャンスが高まります",
+    "submit": "送信して今日の運試しをしましょう！",
+    "required": "この項目は必須です"
+  },
+  "welcome": {
+    "title": "あなたのご意見、\nあなたのチャンス",
+    "subtitle": "ご利用体験を共有して、今すぐギフト券が当たるチャンス！",
+    "chooseLanguage": "言語を選択してください"
+  },
+  "page2": {
+    "backToLanguage": "言語を変更する",
+    "title": "ご来店について教えてください",
+    "subtitle": "まずはいくつかの情報をご入力ください",
+    "receiptNumber": "レシート / 取引番号",
+    "receiptPlaceholder": "例：ABC12345678",
+    "totalPurchase": "購入金額（IDR）",
+    "totalPurchasePlaceholder": "例：250000",
+    "country": "居住国",
+    "countryPlaceholder": "国を選択してください",
+    "overallRating": "今回の体験の総合評価",
+    "veryPoor": "とても悪い",
+    "excellent": "とても良い"
+  },
+  "page3": {
+    "title": "当店のサービスはいかがでしたか？",
+    "subtitle": "以下の項目を評価してください",
+    "staffFriendliness": "スタッフの親切さ",
+    "staffHelpfulness": "スタッフの対応",
+    "checkoutProcess": "会計手続き",
+    "serviceSpeed": "サービスの速さ"
+  }
+}

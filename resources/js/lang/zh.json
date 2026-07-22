@@ -1,0 +1,35 @@
+{
+  "common": {
+    "back": "返回上一页",
+    "giveMore": "提供更多信息，提高中奖机会",
+    "submit": "立即提交，试试今天的好运！",
+    "required": "此字段为必填项"
+  },
+  "welcome": {
+    "title": "您的反馈，\n您的机会",
+    "subtitle": "分享您的购物体验，即有机会立即赢取购物券！",
+    "chooseLanguage": "请选择您的语言"
+  },
+  "page2": {
+    "backToLanguage": "更改语言",
+    "title": "告诉我们您的购物体验",
+    "subtitle": "请先提供一些基本信息",
+    "receiptNumber": "收据 / 交易编号",
+    "receiptPlaceholder": "例如：ABC12345678",
+    "totalPurchase": "消费总额（印尼盾）",
+    "totalPurchasePlaceholder": "例如：250000",
+    "country": "居住国家",
+    "countryPlaceholder": "请选择您的国家",
+    "overallRating": "您对本次体验的总体评分",
+    "veryPoor": "非常差",
+    "excellent": "非常好"
+  },
+  "page3": {
+    "title": "您对我们的服务满意吗？",
+    "subtitle": "请为以下项目评分",
+    "staffFriendliness": "员工友善度",
+    "staffHelpfulness": "员工服务态度",
+    "checkoutProcess": "结账流程",
+    "serviceSpeed": "服务速度"
+  }
+}

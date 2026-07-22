@@ -1,0 +1,36 @@
+{
+    "common": {
+        "back": "Back to Previous Page",
+        "giveMore": "Give more data to get more chance",
+        "submit": "Submit and Try Your Lucky Today!",
+        "required": "This field is required"
+    },
+    "welcome": {
+        "title": "YOUR FEEDBACK,\nYOUR CHANCE",
+        "subtitle": "Share your experience and get a chance to win a voucher instantly!",
+        "chooseLanguage": "Please choose your language"
+    },
+    "page2": {
+        "backToLanguage": "Change Languange",
+        "title": "Tell Us About Your Visit",
+        "subtitle": "We need a few details to get started",
+        "receiptNumber": "Receipt / Transaction Number",
+        "receiptPlaceholder": "e.g. ABC12345678",
+        "totalPurchase": "Total Purchase (IDR)",
+        "totalPurchasePlaceholder": "e.g. 250000",
+        "country": "Country of Residence",
+        "countryPlaceholder": "Select your country",
+        "overallRating": "Overall Rating of Your Experience",
+        "veryPoor": "Very Poor",
+        "excellent": "Excellent"
+    },
+    "page3": {
+        "title": "How Was Our Service?",
+        "subtitle": "Please rate the following aspects",
+        "staffFriendliness": "Staff Friendliness",
+        "staffHelpfulness": "Staff Helpfulness",
+        "checkoutProcess": "Checkout Process",
+        "serviceSpeed": "Service Speed"
+    }
+    
+}

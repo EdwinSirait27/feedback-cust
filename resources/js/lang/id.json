@@ -1,0 +1,35 @@
+{
+    "common": {
+        "back": "Kembali",
+        "giveMore": "Isi data lebih banyak",
+        "submit": "Kirim & Coba Keberuntungan!",
+        "required": "Wajib diisi"
+    },
+    "welcome": {
+        "title": "FEEDBACKMU,\nKESEMPATANMU",
+        "subtitle": "Bagikan pengalamanmu dan dapatkan kesempatan menang voucher instan!",
+        "chooseLanguage": "Silakan pilih bahasa Anda"
+    },
+    "page2": {
+        "backToLanguage": "Ganti Bahasa",
+        "title": "Ceritakan Tentang Kunjunganmu",
+        "subtitle": "Kami butuh beberapa detail untuk memulai",
+        "receiptNumber": "Nomor Struk / Transaksi",
+        "receiptPlaceholder": "Contoh: ABC12345678",
+        "totalPurchase": "Total Belanja (IDR)",
+        "totalPurchasePlaceholder": "Contoh: 250000",
+        "country": "Negara Asal",
+        "countryPlaceholder": "Pilih negara Anda",
+        "overallRating": "Rating Keseluruhan Pengalamanmu",
+        "veryPoor": "Sangat Buruk",
+        "excellent": "Sangat Baik"
+    },
+    "page3": {
+        "title": "Bagaimana Pelayanan Kami?",
+        "subtitle": "Silakan nilai aspek berikut",
+        "staffFriendliness": "Keramahan Staf",
+        "staffHelpfulness": "Kesediaan Membantu",
+        "checkoutProcess": "Proses di Kasir",
+        "serviceSpeed": "Kecepatan Layanan"
+    }
+}
