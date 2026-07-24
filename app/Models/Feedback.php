@@ -10,7 +10,7 @@ class Feedback extends Model
         protected $table = 'feedbacks'; // tambahkan ini
 
     protected $fillable = [
-        'session_token', 'language', 'receipt_number', 'total_purchase', 'country',
+        'session_token',     'has_receipt','language', 'receipt_number', 'total_purchase', 'country',
         'overall_rating', 'staff_friendliness', 'staff_helpfulness', 'checkout_process',
         'service_speed', 'store_cleanliness', 'store_ambience', 'product_display',
         'product_variety', 'product_quality', 'product_design', 'price_appropriateness',
@@ -20,6 +20,8 @@ class Feedback extends Model
     ];
 
     protected $casts = [
+            'has_receipt' => 'boolean',
+
         'may_contact' => 'boolean',
         'completed_at' => 'datetime',
     ];

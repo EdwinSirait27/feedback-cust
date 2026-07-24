@@ -1,35 +1,107 @@
 {
-  "common": {
-    "back": "前のページへ戻る",
-    "giveMore": "より多くの情報を入力すると当選のチャンスが高まります",
-    "submit": "送信して今日の運試しをしましょう！",
-    "required": "この項目は必須です"
-  },
-  "welcome": {
-    "title": "あなたのご意見、\nあなたのチャンス",
-    "subtitle": "ご利用体験を共有して、今すぐギフト券が当たるチャンス！",
-    "chooseLanguage": "言語を選択してください"
-  },
-  "page2": {
-    "backToLanguage": "言語を変更する",
-    "title": "ご来店について教えてください",
-    "subtitle": "まずはいくつかの情報をご入力ください",
-    "receiptNumber": "レシート / 取引番号",
-    "receiptPlaceholder": "例：ABC12345678",
-    "totalPurchase": "購入金額（IDR）",
-    "totalPurchasePlaceholder": "例：250000",
-    "country": "居住国",
-    "countryPlaceholder": "国を選択してください",
-    "overallRating": "今回の体験の総合評価",
-    "veryPoor": "とても悪い",
-    "excellent": "とても良い"
-  },
-  "page3": {
-    "title": "当店のサービスはいかがでしたか？",
-    "subtitle": "以下の項目を評価してください",
-    "staffFriendliness": "スタッフの親切さ",
-    "staffHelpfulness": "スタッフの対応",
-    "checkoutProcess": "会計手続き",
-    "serviceSpeed": "サービスの速さ"
-  }
+    "common": {
+        "back": "前のページへ戻る",
+        "giveMore": "より多くの情報を入力すると当選のチャンスが高まります",
+        "submit": "送信して今日の運試しをしましょう！",
+        "required": "この項目は必須です",
+        "backHint": "Wrong language? Change here"
+    },
+    "welcome": {
+        "title": "あなたのご意見、\nあなたのチャンス",
+        "subtitle": "ご利用体験を共有して、今すぐギフト券が当たるチャンス！",
+        "chooseLanguage": "言語を選択してください"
+    },
+    "page2": {
+        "hasReceiptRequired": "購入時のレシートをお持ちかどうかを選択してください.",
+        "overallRatingRequired": "全体的な体験の評価を選択してください.",
+        "receiptNumberRequired": "レシートをお持ちの場合は、レシート番号が必要です.",
+        "totalPurchaseRequired": "レシートをお持ちの場合は、購入合計金額が必要です.",
+        "hasReceiptQuestion": "買い物のレシートはお持ちですか？",
+        "hasReceiptYes": "はい、持っています",
+        "hasReceiptNo": "レシートなし",
+        "noReceiptNote": "問題ありません！領収書がなくてもアンケートは続行できます.",
+        "backToLanguage": "言語を変更する",
+        "title": "ご来店について教えてください",
+        "subtitle": "まずはいくつかの情報をご入力ください",
+        "receiptNumber": "レシート / 取引番号",
+        "receiptPlaceholder": "例：PJL-22101600001",
+        "totalPurchase": "購入金額（IDR）",
+        "totalPurchasePlaceholder": "例：250000",
+        "country": "居住国",
+        "countryPlaceholder": "国を選択してください",
+        "overallRating": "今回の体験の総合評価",
+        "veryPoor": "とても悪い",
+        "excellent": "とても良い"
+    },
+    "page3": {
+        "title": "当店のサービスはいかがでしたか？",
+        "subtitle": "以下の項目を評価してください",
+        "staffFriendliness": "スタッフの親切さ",
+        "staffHelpfulness": "スタッフの対応",
+        "checkoutProcess": "会計手続き",
+        "serviceSpeed": "サービスの速さ",
+            "ratingRequired": "評価を入力してください."
+
+    },
+    "validation": {
+    "ratingRequired": "評価を入力してください."
+},
+"page4": {
+    "title": "店舗はいかがでしたか？",
+    "subtitle": "以下の点について評価してください",
+    "storeCleanliness": "店舗の清潔さ",
+    "storeAmbience": "店舗の雰囲気",
+    "productDisplay": "商品の陳列",
+    "productVariety": "商品の種類"
+},
+"page5": {
+    "title": "商品についてどう思いますか？",
+    "subtitle": "以下の点について評価してください",
+    "productQuality": "商品の品質",
+    "productDesign": "商品のデザイン",
+    "priceAppropriateness": "価格の適切さ",
+    "valueForMoney": "コストパフォーマンス"
+},
+"page6": {
+    "title": "もっとご意見をお聞かせください！",
+    "subtitle": "お客様のフィードバックが私たちの改善に役立ちます",
+    "likeMost": "最も気に入った点は何ですか？",
+    "improve": "改善できる点は何ですか？",
+    "writeHere": "こちらにご記入ください...",
+    "recommend": "友人や家族に私たちを勧めますか？",
+    "notLikely": "あまりない",
+    "veryLikely": "とてもある"
+},
+
+    "page7": {
+    "title": "もうすぐ完了！",
+    "subtitle": "追加情報（任意）",
+    "mayContact": "必要に応じてご連絡してもよろしいですか？",
+    "yes": "はい、どうぞ",
+    "no": "いいえ、結構です",
+    "fullName": "氏名",
+    "email": "メールアドレス",
+    "whatsapp": "WhatsApp（任意）"
+},
+"spin": {
+    "title": "ラッキーホイールを回そう！",
+    "subtitle": "今日のラッキーウィナーはあなたかも！",
+    "button": "スピン",
+    "thankYou": "ありがとうございます！",
+    "youWon": "おめでとうございます！当選しました！",
+    "noLuck": "あなたのフィードバックはとても大切です！",
+    "footerNote": "アンケート1回 = スピン1回のチャンス"
+},
+"result": {
+    "congrats": "おめでとうございます！",
+    "youWon": "ショッピングバウチャーを獲得しました！",
+    "voucher": "ショッピングバウチャー",
+    "sentNote": "バウチャーコードがメール/WhatsAppに送信されました。",
+    "thankYouTitle": "フィードバックありがとうございます！",
+    "thankYouNote": "次回はラッキーになりますように！あなたのフィードバックはとても大切です。",
+    "helpUs": "改善のためにご協力ください",
+    "reviewButton": "Googleでレビューする",
+      "doneButton": "完了",
+    "doneHint": "クリックしてこのセッションを終了し、新しいアンケートを開始します"
+}
 }

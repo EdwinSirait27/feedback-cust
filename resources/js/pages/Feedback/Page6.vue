@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3'
 import { useI18n } from 'vue-i18n'
 import FeedbackLayout from '@/layouts/FeedbackLayout.vue'
@@ -56,6 +56,114 @@ function submit(finishNow: boolean) {
                     <span>{{ t('page6.notLikely') }}</span>
                     <span>{{ t('page6.veryLikely') }}</span>
                 </div>
+            </div>
+        </div>
+    </FeedbackLayout>
+</template> -->
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useForm, router } from '@inertiajs/vue3'
+import { useI18n } from 'vue-i18n'
+import FeedbackLayout from '@/layouts/FeedbackLayout.vue'
+import { showStep, updateStep } from '@/actions/App/Http/Controllers/FeedbackController'
+
+const { t } = useI18n()
+
+interface Feedback {
+    like_most: string | null
+    improvement_suggestion: string | null
+    recommend_likelihood: number | null
+}
+
+const props = defineProps<{ feedback: Feedback }>()
+
+const isSubmitting = ref(false)
+
+const form = useForm({
+    like_most: props.feedback.like_most ?? '',
+    improvement_suggestion: props.feedback.improvement_suggestion ?? '',
+    recommend_likelihood: props.feedback.recommend_likelihood ?? null,
+    finish_now: false,
+})
+
+function submit(finishNow: boolean) {
+    if (isSubmitting.value) return
+
+    if (form.recommend_likelihood === null) {
+        form.setError('recommend_likelihood', t('validation.ratingRequired'))
+        return
+    }
+
+    isSubmitting.value = true
+    form.finish_now = finishNow
+    router.post(updateStep(6).url, form.data(), {
+        preserveState: false,
+        preserveScroll: false,
+        onFinish: () => { isSubmitting.value = false },
+    })
+}
+</script>
+
+<template>
+    <FeedbackLayout
+        :step="6"
+        :title="t('page6.title')"
+        :subtitle="t('page6.subtitle')"
+        :back-href="showStep(5)"
+        :loading="form.processing || isSubmitting"
+        @continue="submit(false)"
+        @finish="submit(true)"
+    >
+        <div class="space-y-6">
+            <div>
+                <label class="mb-1 block text-sm font-medium text-[#3B2A20]">
+                    {{ t('page6.likeMost') }}
+                </label>
+                <textarea
+                    v-model="form.like_most"
+                    rows="3"
+                    :placeholder="t('page6.writeHere')"
+                    class="w-full rounded-lg border border-[#E8D9C3] bg-white px-3 py-2.5 text-sm text-[#3B2A20] placeholder:text-[#C9B79C] focus:outline-none focus:ring-2 focus:ring-[#3B2A20]/20"
+                />
+            </div>
+
+            <div>
+                <label class="mb-1 block text-sm font-medium text-[#3B2A20]">
+                    {{ t('page6.improve') }}
+                </label>
+                <textarea
+                    v-model="form.improvement_suggestion"
+                    rows="3"
+                    :placeholder="t('page6.writeHere')"
+                    class="w-full rounded-lg border border-[#E8D9C3] bg-white px-3 py-2.5 text-sm text-[#3B2A20] placeholder:text-[#C9B79C] focus:outline-none focus:ring-2 focus:ring-[#3B2A20]/20"
+                />
+            </div>
+
+            <div>
+                <label class="mb-2 block text-sm font-medium text-[#3B2A20]">
+                    {{ t('page6.recommend') }}
+                </label>
+                <div class="flex flex-wrap gap-1.5">
+                    <button
+                        v-for="n in 11"
+                        :key="n - 1"
+                        type="button"
+                        class="h-8 w-8 rounded-md border text-xs font-medium transition-colors"
+                        :class="form.recommend_likelihood === n - 1
+                            ? 'border-[#3B2A20] bg-[#3B2A20] text-white'
+                            : 'border-[#E8D9C3] text-[#8B5E3C] hover:bg-[#F3E4CC]'"
+                        @click="form.recommend_likelihood = n - 1"
+                    >
+                        {{ n - 1 }}
+                    </button>
+                </div>
+                <div class="mt-1 flex justify-between text-xs text-[#8B5E3C]">
+                    <span>{{ t('page6.notLikely') }}</span>
+                    <span>{{ t('page6.veryLikely') }}</span>
+                </div>
+                <p v-if="form.errors.recommend_likelihood" class="mt-1 text-xs text-red-500">
+                    {{ form.errors.recommend_likelihood }}
+                </p>
             </div>
         </div>
     </FeedbackLayout>

@@ -33,15 +33,19 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
-    public function share(Request $request): array
+   
+     public function share(Request $request): array
     {
-        return [
-            ...parent::share($request),
-            'name' => config('app.name'),
-            'auth' => [
-                'user' => $request->user(),
-            ],
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-        ];
+        // Ambil language dari session feedback yang aktif
+        $language = 'en'; // default
+        $feedbackId = $request->session()->get('feedback_id');
+        if ($feedbackId) {
+            $feedback = \App\Models\Feedback::find($feedbackId);
+            $language = $feedback?->language ?? 'en';
+        }
+                app()->setLocale($language);
+        return array_merge(parent::share($request), [
+            'locale' => $language,
+        ]);
     }
 }

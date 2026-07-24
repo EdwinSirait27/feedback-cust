@@ -3,7 +3,8 @@
         "back": "Back to Previous Page",
         "giveMore": "Give more data to get more chance",
         "submit": "Submit and Try Your Lucky Today!",
-        "required": "This field is required"
+        "required": "This field is required",
+        "backHint": "Wrong language? Change here"
     },
     "welcome": {
         "title": "YOUR FEEDBACK,\nYOUR CHANCE",
@@ -11,11 +12,19 @@
         "chooseLanguage": "Please choose your language"
     },
     "page2": {
+        "receiptNumberRequired": " The receipt number is required if you have a receipt.",
+        "totalPurchaseRequired": "The total purchase amount is required if you have a receipt.",
+        "hasReceiptRequired": "Please select whether you have a purchase receipt.",
+        "overallRatingRequired": "Please select your overall experience rating.",
+        "hasReceiptQuestion": "Do you have a purchase receipt?",
+        "hasReceiptYes": "Yes, I have it",
+        "hasReceiptNo": "No receipt",
+        "noReceiptNote": "No problem! You can still continue the survey without a receipt.",
         "backToLanguage": "Change Languange",
         "title": "Tell Us About Your Visit",
         "subtitle": "We need a few details to get started",
         "receiptNumber": "Receipt / Transaction Number",
-        "receiptPlaceholder": "e.g. ABC12345678",
+        "receiptPlaceholder": "e.g. PJL-22101600001",
         "totalPurchase": "Total Purchase (IDR)",
         "totalPurchasePlaceholder": "e.g. 250000",
         "country": "Country of Residence",
@@ -26,11 +35,72 @@
     },
     "page3": {
         "title": "How Was Our Service?",
+            "ratingRequired": "Please provide a rating.",
+
         "subtitle": "Please rate the following aspects",
         "staffFriendliness": "Staff Friendliness",
         "staffHelpfulness": "Staff Helpfulness",
         "checkoutProcess": "Checkout Process",
         "serviceSpeed": "Service Speed"
-    }
-    
+    },
+         "validation": {
+        "ratingRequired": "Please provide a rating."
+    },
+    "page4": {
+    "title": "How Was Our Store?",
+    "subtitle": "Please rate the following aspects",
+    "storeCleanliness": "Store Cleanliness",
+    "storeAmbience": "Store Ambience",
+    "productDisplay": "Product Display",
+    "productVariety": "Product Variety"
+},
+"page5": {
+    "title": "What Do You Think About Our Products?",
+    "subtitle": "Please rate the following aspects",
+    "productQuality": "Product Quality",
+    "productDesign": "Product Design",
+    "priceAppropriateness": "Price Appropriateness",
+    "valueForMoney": "Value for Money"
+},
+"page6": {
+    "title": "We'd Love to Hear More From You!",
+    "subtitle": "Your feedback helps us improve",
+    "likeMost": "What did you like the most?",
+    "improve": "What can we improve?",
+    "writeHere": "Write your answer here...",
+    "recommend": "Would you recommend us to your friends or family?",
+    "notLikely": "Not Likely",
+    "veryLikely": "Very Likely"
+},
+    "page7": {
+    "title": "Almost Done!",
+    "subtitle": "A few more details (optional)",
+    "mayContact": "May we contact you if needed?",
+    "yes": "Yes, please",
+    "no": "No, thank you",
+    "fullName": "Full Name",
+    "email": "Email",
+    "whatsapp": "WhatsApp (Optional)"
+},
+"spin": {
+    "title": "Spin the Wheel!",
+    "subtitle": "Let's see if you're today's lucky winner!",
+    "button": "SPIN",
+    "thankYou": "Thank You!",
+    "youWon": "Congratulations! You Won!",
+    "noLuck": "Your feedback means a lot to us!",
+    "footerNote": "Every survey = 1 spin chance"
+},
+"result": {
+    "congrats": "CONGRATULATIONS!",
+    "youWon": "You have won a shopping voucher!",
+    "voucher": "SHOPPING VOUCHER",
+    "sentNote": "Your voucher code has been sent to your email/WhatsApp.",
+    "thankYouTitle": "Thank You for Your Feedback!",
+    "thankYouNote": "Better luck next time! Your feedback means a lot to us.",
+    "helpUs": "Help us get better",
+    "reviewButton": "Review us on Google",
+     "doneButton": "Done",
+    "doneHint": "Click to end this session and start a new survey"
+}
 }

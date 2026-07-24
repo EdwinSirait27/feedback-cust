@@ -3,7 +3,8 @@
         "back": "Kembali",
         "giveMore": "Isi data lebih banyak",
         "submit": "Kirim & Coba Keberuntungan!",
-        "required": "Wajib diisi"
+        "required": "Wajib diisi",
+        "backHint": "Wrong language? Change here"
     },
     "welcome": {
         "title": "FEEDBACKMU,\nKESEMPATANMU",
@@ -11,11 +12,19 @@
         "chooseLanguage": "Silakan pilih bahasa Anda"
     },
     "page2": {
+        "receiptNumberRequired": "Nomor struk wajib diisi jika Anda memiliki struk.",
+        "totalPurchaseRequired": "Total belanja wajib diisi jika Anda memiliki struk.",
+        "hasReceiptRequired": "Silakan pilih apakah Anda memiliki struk belanja.",
+        "overallRatingRequired": "Silakan pilih rating keseluruhan pengalaman Anda.",
+        "hasReceiptQuestion": "Apakah Anda memiliki struk belanja?",
+        "hasReceiptYes": "Ya, saya punya",
+        "hasReceiptNo": "Tidak punya struk",
+        "noReceiptNote": "Tidak masalah! Anda tetap bisa melanjutkan survey tanpa struk.",
         "backToLanguage": "Ganti Bahasa",
         "title": "Ceritakan Tentang Kunjunganmu",
         "subtitle": "Kami butuh beberapa detail untuk memulai",
         "receiptNumber": "Nomor Struk / Transaksi",
-        "receiptPlaceholder": "Contoh: ABC12345678",
+        "receiptPlaceholder": "Contoh: PJL-22101600001",
         "totalPurchase": "Total Belanja (IDR)",
         "totalPurchasePlaceholder": "Contoh: 250000",
         "country": "Negara Asal",
@@ -31,5 +40,68 @@
         "staffHelpfulness": "Kesediaan Membantu",
         "checkoutProcess": "Proses di Kasir",
         "serviceSpeed": "Kecepatan Layanan"
-    }
+
+    },
+
+"validation": {
+    "ratingRequired": "Silakan berikan penilaian."
+},
+
+"page4": {
+    "title": "Bagaimana Toko Kami?",
+    "subtitle": "Silakan nilai aspek berikut",
+    "storeCleanliness": "Kebersihan Toko",
+    "storeAmbience": "Suasana & Kenyamanan",
+    "productDisplay": "Penataan Produk",
+    "productVariety": "Kelengkapan Produk"
+},
+"page5": {
+    "title": "Bagaimana Menurutmu Tentang Produk Kami?",
+    "subtitle": "Silakan nilai aspek berikut",
+    "productQuality": "Kualitas Produk",
+    "productDesign": "Desain Produk",
+    "priceAppropriateness": "Kesesuaian Harga",
+    "valueForMoney": "Nilai yang Didapat"
+},
+"page6": {
+    "title": "Kami Ingin Dengar Lebih Banyak Darimu!",
+    "subtitle": "Masukanmu membantu kami menjadi lebih baik",
+    "likeMost": "Apa yang paling Anda sukai?",
+    "improve": "Apa yang bisa kami tingkatkan?",
+    "writeHere": "Tulis jawaban Anda...",
+    "recommend": "Apakah Anda merekomendasikan kami ke teman/keluarga?",
+    "notLikely": "Tidak Mungkin",
+    "veryLikely": "Sangat Mungkin"
+},
+    "page7": {
+    "title": "Hampir Selesai!",
+    "subtitle": "Beberapa detail tambahan (opsional)",
+    "mayContact": "Boleh kami hubungi jika diperlukan?",
+    "yes": "Ya, boleh",
+    "no": "Tidak, terima kasih",
+    "fullName": "Nama Lengkap",
+    "email": "Email",
+    "whatsapp": "WhatsApp (Opsional)"
+},
+"spin": {
+    "title": "Putar Roda Keberuntunganmu!",
+    "subtitle": "Yuk lihat apakah kamu pemenang hari ini!",
+    "button": "SPIN",
+    "thankYou": "Terima Kasih!",
+    "youWon": "Selamat! Kamu Menang!",
+    "noLuck": "Feedbackmu sangat berarti untuk kami!",
+    "footerNote": "Setiap pengisian survey = 1 kesempatan spin"
+},
+"result": {
+    "congrats": "SELAMAT!",
+    "youWon": "Kamu berhasil memenangkan voucher belanja!",
+    "voucher": "VOUCHER BELANJA",
+    "sentNote": "Kode voucher sudah dikirim ke email/WhatsApp kamu.",
+    "thankYouTitle": "Terima Kasih atas Feedbackmu!",
+    "thankYouNote": "Kali ini kamu belum beruntung, tapi feedbackmu sangat berarti untuk kami.",
+    "helpUs": "Bantu kami menjadi lebih baik",
+    "reviewButton": "Review kami di Google",
+    "doneButton": "Selesai",
+    "doneHint": "Klik untuk mengakhiri sesi dan memulai ulang survey baru"
+}
 }

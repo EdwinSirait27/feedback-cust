@@ -1,35 +1,109 @@
 {
-  "common": {
-    "back": "이전 페이지로 돌아가기",
-    "giveMore": "더 많은 정보를 입력하면 당첨 기회가 높아집니다",
-    "submit": "제출하고 오늘의 행운에 도전하세요!",
-    "required": "필수 입력 항목입니다"
-  },
-  "welcome": {
-    "title": "여러분의 의견,\n여러분의 기회",
-    "subtitle": "쇼핑 경험을 공유하고 즉시 바우처를 받을 기회를 잡으세요!",
-    "chooseLanguage": "언어를 선택해 주세요"
-  },
-  "page2": {
-    "backToLanguage": "언어 변경",
-    "title": "방문 경험을 알려주세요",
-    "subtitle": "시작하기 위해 몇 가지 정보를 입력해 주세요",
-    "receiptNumber": "영수증 / 거래 번호",
-    "receiptPlaceholder": "예: ABC12345678",
-    "totalPurchase": "총 구매 금액 (IDR)",
-    "totalPurchasePlaceholder": "예: 250000",
-    "country": "거주 국가",
-    "countryPlaceholder": "국가를 선택하세요",
-    "overallRating": "전체적인 경험 평가",
-    "veryPoor": "매우 불만족",
-    "excellent": "매우 만족"
-  },
-  "page3": {
-    "title": "저희 서비스는 어떠셨나요?",
+    "common": {
+        "back": "이전 페이지로 돌아가기",
+        "giveMore": "더 많은 정보를 입력하면 당첨 기회가 높아집니다",
+        "submit": "제출하고 오늘의 행운에 도전하세요!",
+        "required": "필수 입력 항목입니다",
+        "backHint": "Wrong language? Change here"
+    },
+    "welcome": {
+        "title": "여러분의 의견,\n여러분의 기회",
+        "subtitle": "쇼핑 경험을 공유하고 즉시 바우처를 받을 기회를 잡으세요!",
+        "chooseLanguage": "언어를 선택해 주세요"
+    },
+    "page2": {
+        "receiptNumberRequired": "영수증이 있는 경우 영수증 번호를 입력해야 합니다.",
+        "totalPurchaseRequired": "영수증이 있는 경우 총 구매 금액을 기입해야 합니다.",
+        "hasReceiptRequired": "구매 영수증이 있는지 여부를 선택해 주세요.",
+        "overallRatingRequired": "전체적인 경험 평점을 선택해 주세요.",
+
+        "hasReceiptQuestion": "쇼핑 영수증 있으세요?",
+        "hasReceiptYes": "네, 있어요.",
+        "hasReceiptNo": "영수증 없음",
+        "noReceiptNote": "문제없습니다! 영수증 없이도 설문조사를 계속 진행하실 수 있습니다.",
+        "backToLanguage": "언어 변경",
+        "title": "방문 경험을 알려주세요",
+        "subtitle": "시작하기 위해 몇 가지 정보를 입력해 주세요",
+        "receiptNumber": "영수증 / 거래 번호",
+        "receiptPlaceholder": "예: PJL-22101600001",
+        "totalPurchase": "총 구매 금액 (IDR)",
+        "totalPurchasePlaceholder": "예: 250000",
+        "country": "거주 국가",
+        "countryPlaceholder": "국가를 선택하세요",
+        "overallRating": "전체적인 경험 평가",
+        "veryPoor": "매우 불만족",
+        "excellent": "매우 만족"
+    },
+    "page3": {
+        "title": "저희 서비스는 어떠셨나요?",
+        "subtitle": "다음 항목을 평가해 주세요",
+        "staffFriendliness": "직원의 친절도",
+        "staffHelpfulness": "직원의 도움",
+        "checkoutProcess": "결제 과정",
+        "serviceSpeed": "서비스 속도",
+            "ratingRequired": "평점을 입력해 주세요."
+
+    },
+    "validation": {
+    "ratingRequired": "평점을 입력해 주세요."
+},
+"page4": {
+    "title": "매장은 어떠셨나요?",
     "subtitle": "다음 항목을 평가해 주세요",
-    "staffFriendliness": "직원의 친절도",
-    "staffHelpfulness": "직원의 도움",
-    "checkoutProcess": "결제 과정",
-    "serviceSpeed": "서비스 속도"
-  }
+    "storeCleanliness": "매장 청결도",
+    "storeAmbience": "매장 분위기",
+    "productDisplay": "상품 진열",
+    "productVariety": "상품 다양성"
+},
+"page5": {
+    "title": "저희 제품에 대해 어떻게 생각하시나요?",
+    "subtitle": "다음 항목을 평가해 주세요",
+    "productQuality": "상품 품질",
+    "productDesign": "상품 디자인",
+    "priceAppropriateness": "가격 적절성",
+    "valueForMoney": "가성비"
+},
+"page6": {
+    "title": "더 많은 의견을 들려주세요!",
+    "subtitle": "고객님의 피드백이 저희 개선에 도움이 됩니다",
+    "likeMost": "가장 좋았던 점은 무엇인가요?",
+    "improve": "개선할 수 있는 점은 무엇인가요?",
+    "writeHere": "여기에 답변을 작성해 주세요...",
+    "recommend": "친구나 가족에게 저희를 추천하시겠습니까?",
+    "notLikely": "추천하지 않음",
+    "veryLikely": "매우 추천"
+},
+
+    "page7": {
+    "title": "거의 다 됐어요!",
+    "subtitle": "몇 가지 추가 정보 (선택사항)",
+    "mayContact": "필요한 경우 연락해도 될까요?",
+    "yes": "네, 괜찮습니다",
+    "no": "아니요, 괜찮습니다",
+    "fullName": "성명",
+    "email": "이메일",
+    "whatsapp": "WhatsApp (선택사항)"
+},
+"spin": {
+    "title": "행운의 바퀴를 돌려보세요!",
+    "subtitle": "오늘의 행운의 당첨자가 되어보세요!",
+    "button": "스핀",
+    "thankYou": "감사합니다!",
+    "youWon": "축하합니다! 당첨되셨습니다!",
+    "noLuck": "고객님의 피드백은 저희에게 매우 소중합니다!",
+    "footerNote": "설문 1회 완료 = 스핀 1회 기회"
+},
+"result": {
+    "congrats": "축하합니다!",
+    "youWon": "쇼핑 상품권에 당첨되셨습니다!",
+    "voucher": "쇼핑 상품권",
+    "sentNote": "바우처 코드가 이메일/WhatsApp으로 전송되었습니다.",
+    "thankYouTitle": "피드백에 감사드립니다!",
+    "thankYouNote": "다음 기회에 행운을 빕니다! 고객님의 피드백은 저희에게 매우 소중합니다.",
+    "helpUs": "저희가 더 나아질 수 있도록 도와주세요",
+    "reviewButton": "Google에서 리뷰하기",
+     "doneButton": "완료",
+    "doneHint": "클릭하여 이 세션을 종료하고 새 설문을 시작하세요"
+}
+
 }

@@ -24,17 +24,14 @@ const sidebarNavItems: NavItem[] = [
         href: editAppearance(),
     },
 ];
-
 const { isCurrentOrParentUrl } = useCurrentUrl();
 </script>
-
 <template>
     <div class="px-4 py-6">
         <Heading
             title="Settings"
             description="Manage your profile and account settings"
         />
-
         <div class="flex flex-col lg:flex-row lg:space-x-12">
             <aside class="w-full max-w-xl lg:w-48">
                 <nav

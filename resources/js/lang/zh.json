@@ -1,35 +1,110 @@
 {
-  "common": {
-    "back": "返回上一页",
-    "giveMore": "提供更多信息，提高中奖机会",
-    "submit": "立即提交，试试今天的好运！",
-    "required": "此字段为必填项"
-  },
-  "welcome": {
-    "title": "您的反馈，\n您的机会",
-    "subtitle": "分享您的购物体验，即有机会立即赢取购物券！",
-    "chooseLanguage": "请选择您的语言"
-  },
-  "page2": {
-    "backToLanguage": "更改语言",
-    "title": "告诉我们您的购物体验",
-    "subtitle": "请先提供一些基本信息",
-    "receiptNumber": "收据 / 交易编号",
-    "receiptPlaceholder": "例如：ABC12345678",
-    "totalPurchase": "消费总额（印尼盾）",
-    "totalPurchasePlaceholder": "例如：250000",
-    "country": "居住国家",
-    "countryPlaceholder": "请选择您的国家",
-    "overallRating": "您对本次体验的总体评分",
-    "veryPoor": "非常差",
-    "excellent": "非常好"
-  },
-  "page3": {
-    "title": "您对我们的服务满意吗？",
-    "subtitle": "请为以下项目评分",
-    "staffFriendliness": "员工友善度",
-    "staffHelpfulness": "员工服务态度",
-    "checkoutProcess": "结账流程",
-    "serviceSpeed": "服务速度"
-  }
+    "common": {
+        "back": "返回上一页",
+        "giveMore": "提供更多信息，提高中奖机会",
+        "submit": "立即提交，试试今天的好运！",
+        "required": "此字段为必填项",
+        "backHint": "Wrong language? Change here"
+    },
+    "welcome": {
+        "title": "您的反馈，\n您的机会",
+        "subtitle": "分享您的购物体验，即有机会立即赢取购物券！",
+        "chooseLanguage": "请选择您的语言"
+    },
+    "page2": {
+        "receiptNumberRequired": "如果您有收据，请提供收据编号.",
+        "totalPurchaseRequired": "如果您有收据，请填写购买总额.",
+        "overallRatingRequired": "请选择您的整体体验评分.",
+
+        "hasReceiptRequired": "请选择您是否有购物小票.",
+        "hasReceiptQuestion": "你有购物小票吗？",
+        "hasReceiptYes": "是的，我有",
+        "hasReceiptNo": "没有收据",
+        "noReceiptNote": "没问题！即使没有收据，您仍然可以继续完成调查.",
+        "backToLanguage": "更改语言",
+        "title": "告诉我们您的购物体验",
+        "subtitle": "请先提供一些基本信息",
+        "receiptNumber": "收据 / 交易编号",
+        "receiptPlaceholder": "例如：PJL-22101600001",
+        "totalPurchase": "消费总额（印尼盾）",
+        "totalPurchasePlaceholder": "例如：250000",
+        "country": "居住国家",
+        "countryPlaceholder": "请选择您的国家",
+        "overallRating": "您对本次体验的总体评分",
+        "veryPoor": "非常差",
+        "excellent": "非常好"
+    },
+    "page3": {
+        "title": "您对我们的服务满意吗？",
+        "subtitle": "请为以下项目评分",
+        "staffFriendliness": "员工友善度",
+        "staffHelpfulness": "员工服务态度",
+        "checkoutProcess": "结账流程",
+        "serviceSpeed": "服务速度",
+            "ratingRequired": "请提供评分."
+
+    },
+    "validation": {
+    "ratingRequired": "请提供评分."
+},
+
+"page4": {
+    "title": "您对我们的店铺满意吗？",
+    "subtitle": "请对以下方面进行评分",
+    "storeCleanliness": "店铺清洁度",
+    "storeAmbience": "店铺氛围",
+    "productDisplay": "商品陈列",
+    "productVariety": "商品种类"
+},
+"page5": {
+    "title": "您对我们的产品有何看法？",
+    "subtitle": "请对以下方面进行评分",
+    "productQuality": "产品质量",
+    "productDesign": "产品设计",
+    "priceAppropriateness": "价格合理性",
+    "valueForMoney": "性价比"
+},
+"page6": {
+    "title": "我们很想听听您的更多想法！",
+    "subtitle": "您的反馈帮助我们改进",
+    "likeMost": "您最喜欢什么？",
+    "improve": "我们可以改进什么？",
+    "writeHere": "请在此处写下您的答案...",
+    "recommend": "您会向朋友或家人推荐我们吗？",
+    "notLikely": "不太可能",
+    "veryLikely": "非常可能"
+},
+
+    "page7": {
+    "title": "即将完成！",
+    "subtitle": "一些额外信息（可选）",
+    "mayContact": "如有需要，我们可以联系您吗？",
+    "yes": "是的，可以",
+    "no": "不，谢谢",
+    "fullName": "全名",
+    "email": "电子邮件",
+    "whatsapp": "WhatsApp（可选）"
+},
+"spin": {
+    "title": "转动幸运轮！",
+    "subtitle": "看看您今天是否是幸运赢家！",
+    "button": "旋转",
+    "thankYou": "谢谢！",
+    "youWon": "恭喜！您赢了！",
+    "noLuck": "您的反馈对我们非常重要！",
+    "footerNote": "每次完成调查 = 1次旋转机会"
+},
+"result": {
+    "congrats": "恭喜您！",
+    "youWon": "您赢得了购物券！",
+    "voucher": "购物券",
+    "sentNote": "您的优惠券代码已发送到您的电子邮件/WhatsApp。",
+    "thankYouTitle": "感谢您的反馈！",
+    "thankYouNote": "下次好运！您的反馈对我们非常重要。",
+    "helpUs": "帮助我们做得更好",
+    "reviewButton": "在Google上评价我们",
+     "doneButton": "完成",
+    "doneHint": "点击结束此次会话并开始新的调查"
+    
+}
 }
