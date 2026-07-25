@@ -44,8 +44,14 @@ class HandleInertiaRequests extends Middleware
             $language = $feedback?->language ?? 'en';
         }
                 app()->setLocale($language);
-        return array_merge(parent::share($request), [
-            'locale' => $language,
-        ]);
+        // return array_merge(parent::share($request), [
+        //     'locale' => $language,
+        // ]);
+         return array_merge(parent::share($request), [
+        'locale' => $language,
+        'flash' => [
+            'error' => $request->session()->get('error'),
+        ],
+    ]);
     }
 }

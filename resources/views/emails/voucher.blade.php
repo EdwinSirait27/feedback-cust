@@ -1,31 +1,28 @@
 <x-mail::message>
-# Selamat, {{ $feedback->full_name ?? 'Pelanggan Setia' }}!
+# Congratulation, {{ $feedback->full_name ?? 'Pelanggan Setia' }}!
 
-Terima kasih sudah mengisi survey **Bali in Bali**.  
-Kamu berhasil memenangkan voucher belanja senilai:
-
+Thank you for completing the Bali in Bali survey.
+You've won a shopping voucher worth:
 <x-mail::panel>
-## Rp {{ number_format($spin->voucher_amount, 0, ',', '.') }}
+Rp {{ number_format($spin->voucher_amount, 0, ',', '.') }}
 </x-mail::panel>
-
-**Kode Voucher Kamu:**
-
+Voucher Code:
 <div style="text-align:center; font-size:24px; font-weight:bold; letter-spacing:4px; padding:16px; background:#f5f5f5; border-radius:8px; margin:16px 0;">
 {{ $spin->voucher_code }}
 </div>
 
-**Scan barcode di kasir:**
+Scan the barcode at the cashier:
 
 <div style="text-align:center; margin:16px 0;">
     <img src="data:image/png;base64,{{ $barcodeBase64 }}" alt="Barcode {{ $spin->voucher_code }}" style="max-width:300px;">
 </div>
 
-**Syarat & Ketentuan:**
-- Voucher berlaku 30 hari sejak diterima
-- Tidak dapat digabungkan dengan promo lain
-- Hanya berlaku untuk 1x transaksi
+Terms & Conditions:**
+- Voucher valid for 1 day from receipt
+- Cannot be combined with other promotions
+- Valid for one transaction only
 
-Sampai jumpa di Bali in Bali!
+See you in Bali!
 
 {{ config('app.name') }}
 </x-mail::message>
