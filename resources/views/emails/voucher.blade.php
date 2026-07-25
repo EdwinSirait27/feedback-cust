@@ -11,11 +11,12 @@ Voucher Code:
 {{ $spin->voucher_code }}
 </div>
 
-Scan the barcode at the cashier:
+{{-- Scan the barcode at the cashier:
 
 <div style="text-align:center; margin:16px 0;">
     <img src="data:image/png;base64,{{ $barcodeBase64 }}" alt="Barcode {{ $spin->voucher_code }}" style="max-width:300px;">
-</div>
+</div> --}}
+Barcode attached** — show it to the cashier to scan.
 
 Terms & Conditions:**
 - Voucher valid for 1 day from receipt
