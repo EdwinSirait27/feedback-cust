@@ -162,7 +162,6 @@ class FeedbackController extends Controller
                     'nullable',
                     'integer',
                     'min:0',
-                    'max:13',
                 ],
                 'country'        => ['required', 'string'],
                 'overall_rating' => ['required', 'integer', 'between:1,5'],
@@ -199,8 +198,6 @@ class FeedbackController extends Controller
             default => [],
         };
     }
-
-
     public function spinPage(): Response|RedirectResponse
     {
         $feedback = $this->currentFeedback();
