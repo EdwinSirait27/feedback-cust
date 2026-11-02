@@ -100,15 +100,15 @@ createInertiaApp({
             i18n.global.locale.value = initialLocale as any;
         }
 
-        // Update locale tiap navigasi Inertia tanpa refresh
-        document.addEventListener('inertia:success', (event: any) => {
-            const newLocale = event.detail?.page?.props?.locale;
-            if (newLocale) {
-                i18n.global.locale.value = newLocale;
-            }
-        });
-
         if (el) {
+            // Update locale tiap navigasi Inertia tanpa refresh
+            document.addEventListener('inertia:success', (event: any) => {
+                const newLocale = event.detail?.page?.props?.locale;
+                if (newLocale) {
+                    i18n.global.locale.value = newLocale;
+                }
+            });
+
             app.mount(el!);
         }
 

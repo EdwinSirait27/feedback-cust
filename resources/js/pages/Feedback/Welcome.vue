@@ -4,12 +4,12 @@ import { useI18n } from 'vue-i18n';
 import { selectLanguage } from '@/actions/App/Http/Controllers/FeedbackController';
 const { t, locale } = useI18n();
 const languages = [
-    { code: 'id', label: 'Bahasa Indonesia', flag: '🇮🇩' },
-    { code: 'en', label: 'English', flag: '🇬🇧' },
-    { code: 'zh', label: '中文（简体）', flag: '🇨🇳' },
-    { code: 'ja', label: '日本語 (Japanese)', flag: '🇯🇵' },
-    { code: 'ko', label: '한국어 (Korean)', flag: '🇰🇷' },
-    { code: 'ru', label: 'Русский (Russian)', flag: '🇷🇺' },
+    { code: 'id', label: 'Bahasa Indonesia' },
+    { code: 'en', label: 'English' },
+    { code: 'zh', label: '中文（简体）' },
+    { code: 'ja', label: '日本語 (Japanese)' },
+    { code: 'ko', label: '한국어 (Korean)' },
+    { code: 'ru', label: 'Русский (Russian)' },
 ];
 const form = useForm({ language: 'en' });
 
@@ -21,36 +21,42 @@ function choose(code: string) {
 </script>
 
 <template>
-    <div
-        class="flex min-h-screen items-center justify-center bg-[#FBF3E7] px-6 py-10"
-    >
-        <div
-            class="w-full max-w-md rounded-2xl border border-[#F0E4D0] bg-white p-8 text-center shadow-sm"
-        >
-            <h1 class="text-2xl font-bold whitespace-pre-line text-[#3B2A20]">
-                {{ t('welcome.title') }}
-            </h1>
-            <p class="mt-3 text-sm text-[#8B5E3C]">
-                {{ t('welcome.subtitle') }}
-            </p>
-
-            <p class="mt-8 mb-3 text-xs text-[#8B5E3C]">
-                {{ t('welcome.chooseLanguage') }}
-            </p>
-
-            <div class="space-y-2">
-                <button
-                    v-for="lang in languages"
-                    :key="lang.code"
-                    type="button"
-                    :disabled="form.processing"
-                    class="flex w-full items-center gap-3 rounded-lg border border-[#E8D9C3] px-4 py-3 text-sm font-medium text-[#3B2A20] hover:bg-[#F3E4CC] disabled:opacity-50"
-                    @click="choose(lang.code)"
-                >
-                    <span class="text-xl">{{ lang.flag }}</span>
-                    {{ lang.label }}
-                </button>
+    <div class="survey">
+        <main class="survey-frame survey-welcome">
+            <div>
+                <img
+                    src="/images/bali-in-bali-logo.png"
+                    width="480"
+                    height="431"
+                    alt="Bali in Bali"
+                    class="survey-welcome__logo"
+                />
+                <h1 class="survey-title survey-title--hero">
+                    {{ t('welcome.title') }}
+                </h1>
+                <p class="survey-subtitle">
+                    {{ t('welcome.subtitle') }}
+                </p>
             </div>
-        </div>
+
+            <div>
+                <p class="survey-label">
+                    {{ t('welcome.chooseLanguage') }}
+                </p>
+                <div class="survey-languages">
+                    <button
+                        v-for="lang in languages"
+                        :key="lang.code"
+                        type="button"
+                        :lang="lang.code"
+                        :disabled="form.processing"
+                        class="survey-language"
+                        @click="choose(lang.code)"
+                    >
+                        {{ lang.label }}
+                    </button>
+                </div>
+            </div>
+        </main>
     </div>
 </template>

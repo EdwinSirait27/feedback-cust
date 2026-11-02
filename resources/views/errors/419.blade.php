@@ -1,6 +1,9 @@
-<div class="error-code">419</div>
-<h1 class="title">Session End</h1>
-<p class="subtitle">
-    Your Session ended.<br>
-    Refresh page.
-</p>
+@extends('errors.layout')
+
+@section('title', 'Session End')
+@section('code', '419')
+@section('heading', 'Session End')
+
+@section('message')
+    Your Session ended. Refresh page.
+@endsection

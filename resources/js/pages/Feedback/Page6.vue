@@ -96,9 +96,11 @@ function submit(finishNow: boolean) {
 
     isSubmitting.value = true
     form.finish_now = finishNow
+    form.clearErrors()
     router.post(updateStep(6).url, form.data(), {
-        preserveState: false,
-        preserveScroll: false,
+        preserveState: 'errors',
+        preserveScroll: 'errors',
+        onError: (errors) => form.setError(errors),
         onFinish: () => { isSubmitting.value = false },
     })
 }
@@ -114,54 +116,62 @@ function submit(finishNow: boolean) {
         @continue="submit(false)"
         @finish="submit(true)"
     >
-        <div class="space-y-6">
-            <div>
-                <label class="mb-1 block text-sm font-medium text-[#3B2A20]">
+        <div>
+            <div class="survey-field">
+                <label class="survey-label" for="like_most">
                     {{ t('page6.likeMost') }}
                 </label>
                 <textarea
+                    id="like_most"
                     v-model="form.like_most"
+                    name="like_most"
                     rows="3"
                     :placeholder="t('page6.writeHere')"
-                    class="w-full rounded-lg border border-[#E8D9C3] bg-white px-3 py-2.5 text-sm text-[#3B2A20] placeholder:text-[#C9B79C] focus:outline-none focus:ring-2 focus:ring-[#3B2A20]/20"
+                    class="survey-input"
                 />
+                <p v-if="form.errors.like_most" class="survey-error" role="alert">
+                    {{ form.errors.like_most }}
+                </p>
             </div>
 
-            <div>
-                <label class="mb-1 block text-sm font-medium text-[#3B2A20]">
+            <div class="survey-field">
+                <label class="survey-label" for="improvement_suggestion">
                     {{ t('page6.improve') }}
                 </label>
                 <textarea
+                    id="improvement_suggestion"
                     v-model="form.improvement_suggestion"
+                    name="improvement_suggestion"
                     rows="3"
                     :placeholder="t('page6.writeHere')"
-                    class="w-full rounded-lg border border-[#E8D9C3] bg-white px-3 py-2.5 text-sm text-[#3B2A20] placeholder:text-[#C9B79C] focus:outline-none focus:ring-2 focus:ring-[#3B2A20]/20"
+                    class="survey-input"
                 />
+                <p v-if="form.errors.improvement_suggestion" class="survey-error" role="alert">
+                    {{ form.errors.improvement_suggestion }}
+                </p>
             </div>
 
-            <div>
-                <label class="mb-2 block text-sm font-medium text-[#3B2A20]">
+            <div class="survey-field">
+                <p class="survey-label">
                     {{ t('page6.recommend') }}
-                </label>
-                <div class="flex flex-wrap gap-1.5">
+                </p>
+                <div class="survey-nps" role="group" :aria-label="t('page6.recommend')">
                     <button
                         v-for="n in 11"
                         :key="n - 1"
                         type="button"
-                        class="h-8 w-8 rounded-md border text-xs font-medium transition-colors"
-                        :class="form.recommend_likelihood === n - 1
-                            ? 'border-[#3B2A20] bg-[#3B2A20] text-white'
-                            : 'border-[#E8D9C3] text-[#8B5E3C] hover:bg-[#F3E4CC]'"
+                        class="survey-nps__cell"
+                        :aria-pressed="form.recommend_likelihood === n - 1"
                         @click="form.recommend_likelihood = n - 1"
                     >
                         {{ n - 1 }}
                     </button>
                 </div>
-                <div class="mt-1 flex justify-between text-xs text-[#8B5E3C]">
+                <div class="survey-scale survey-small">
                     <span>{{ t('page6.notLikely') }}</span>
                     <span>{{ t('page6.veryLikely') }}</span>
                 </div>
-                <p v-if="form.errors.recommend_likelihood" class="mt-1 text-xs text-red-500">
+                <p v-if="form.errors.recommend_likelihood" class="survey-error" role="alert">
                     {{ form.errors.recommend_likelihood }}
                 </p>
             </div>

@@ -43,9 +43,11 @@ function submit(finishNow: boolean) {
 
     isSubmitting.value = true
     form.finish_now = finishNow
+    form.clearErrors()
     router.post(updateStep(4).url, form.data(), {
-        preserveState: false,
-        preserveScroll: false,
+        preserveState: 'errors',
+        preserveScroll: 'errors',
+        onError: (errors) => form.setError(errors),
         onFinish: () => { isSubmitting.value = false },
     })
 }

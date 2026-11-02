@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Feedback extends Model
 {
-        protected $table = 'feedbacks'; // tambahkan ini
+    protected $table = 'feedbacks'; // tambahkan ini
 
     protected $fillable = [
-        'session_token',     'has_receipt','language', 'receipt_number', 'total_purchase', 'country',
+        'session_token',     'has_receipt', 'language', 'receipt_number', 'total_purchase', 'country',
         'overall_rating', 'staff_friendliness', 'staff_helpfulness', 'checkout_process',
         'service_speed', 'store_cleanliness', 'store_ambience', 'product_display',
         'product_variety', 'product_quality', 'product_design', 'price_appropriateness',
@@ -20,7 +20,7 @@ class Feedback extends Model
     ];
 
     protected $casts = [
-            'has_receipt' => 'boolean',
+        'has_receipt' => 'boolean',
 
         'may_contact' => 'boolean',
         'completed_at' => 'datetime',
@@ -39,6 +39,27 @@ class Feedback extends Model
     public function spin(): HasOne
     {
         return $this->hasOne(FeedbackSpin::class);
+    }
+
+    /**
+     * current_step tidak bisa dipakai di sini: tombol kirim melompat ke langkah 7, dan langkah 7 menjadikannya 8.
+     */
+    public function hasAnsweredThroughStepSix(): bool
+    {
+        $requiredAnswers = [
+            'staff_friendliness', 'staff_helpfulness', 'checkout_process', 'service_speed',
+            'store_cleanliness', 'store_ambience', 'product_display', 'product_variety',
+            'product_quality', 'product_design', 'price_appropriateness', 'value_for_money',
+            'recommend_likelihood',
+        ];
+
+        foreach ($requiredAnswers as $answer) {
+            if ($this->getAttribute($answer) === null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

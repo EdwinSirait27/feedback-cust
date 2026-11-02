@@ -1,0 +1,6 @@
+html, body { overflow-x: clip; }
+html { scrollbar-color: var(--color-ink-3) var(--color-paper); }
+::selection { background: color-mix(in oklab, var(--color-gold) 40%, transparent); }
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+h1, h2, h3 { overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }

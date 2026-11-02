@@ -28,7 +28,6 @@
 // use App\Http\Controllers\Admin\FeedbackController as AdminFeedbackController;
 // use App\Http\Controllers\FeedbackController;
 
-
 // Route::middleware(['auth', 'verified'])->group(function () {
 //     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
 // });
@@ -49,16 +48,16 @@
 
 // require __DIR__ . '/settings.php';
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\FeedbackController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
 });
 
 // Public feedback routes
-Route::middleware('throttle:60,1')->group(function () {
+Route::middleware('throttle:feedback-read')->group(function () {
     Route::get('/', [FeedbackController::class, 'welcome'])->name('home');
     Route::get('/step/{step}', [FeedbackController::class, 'showStep'])->whereNumber('step')->name('feedback.step');
     Route::get('/spin', [FeedbackController::class, 'spinPage'])->name('feedback.spin');
@@ -67,7 +66,7 @@ Route::middleware('throttle:60,1')->group(function () {
 
 Route::post('/language', [FeedbackController::class, 'selectLanguage'])
     ->name('feedback.language')
-    ->middleware('throttle:10,1');
+    ->middleware('throttle:feedback-action');
 
 Route::post('/step/{step}', [FeedbackController::class, 'updateStep'])
     ->whereNumber('step')
@@ -82,13 +81,13 @@ Route::post('/spin', [FeedbackController::class, 'spin'])
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/feedbacks', [AdminFeedbackController::class, 'index'])
         ->name('feedbacks.index')
-        ->middleware('throttle:60,1');
+        ->middleware('throttle:feedback-read');
     Route::get('/feedbacks/{feedback}', [AdminFeedbackController::class, 'show'])
         ->name('feedbacks.show')
-        ->middleware('throttle:60,1');
+        ->middleware('throttle:feedback-read');
 });
 Route::post('/done', [FeedbackController::class, 'done'])
     ->name('feedback.done')
-    ->middleware('throttle:10,1');
+    ->middleware('throttle:feedback-action');
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';

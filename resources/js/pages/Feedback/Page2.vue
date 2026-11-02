@@ -109,23 +109,20 @@ function submit(finishNow: boolean) {
         @continue="submit(false)"
         @finish="submit(true)"
     >
-        <div class="space-y-5">
-            <div>
-                <label class="mb-2 block text-sm font-medium text-[#3B2A20]">
+        <div>
+            <div class="survey-field">
+                <p class="survey-label">
                     {{ t('page2.hasReceiptQuestion') }}
-                    <span class="text-red-500">*</span>
-                </label>
-                <div class="flex gap-3">
+                    <span class="survey-required">*</span>
+                </p>
+                <div class="survey-choices">
                     <button
                         type="button"
-                        class="flex-1 rounded-lg border py-3 text-sm font-medium transition-colors"
-                        :class="
-                            hasReceipt === true
-                                ? 'border-[#3B2A20] bg-[#3B2A20] text-white'
-                                : 'border-[#E8D9C3] text-[#8B5E3C] hover:bg-[#F3E4CC]'
-                        "
+                        class="survey-choice"
+                        :aria-pressed="hasReceipt === true"
                         @click="
                             hasReceipt = true;
+                            form.has_receipt = true;
                             hasReceiptError = null;
                         "
                     >
@@ -133,92 +130,65 @@ function submit(finishNow: boolean) {
                     </button>
                     <button
                         type="button"
-                        class="flex-1 rounded-lg border py-3 text-sm font-medium transition-colors"
-                        :class="
-                            hasReceipt === false
-                                ? 'border-[#3B2A20] bg-[#3B2A20] text-white'
-                                : 'border-[#E8D9C3] text-[#8B5E3C] hover:bg-[#F3E4CC]'
-                        "
-                      @click="hasReceipt = false; form.has_receipt = false; form.receipt_number = ''; form.total_purchase = null; hasReceiptError = null"
+                        class="survey-choice"
+                        :aria-pressed="hasReceipt === false"
+                        @click="hasReceipt = false; form.has_receipt = false; form.receipt_number = ''; form.total_purchase = null; hasReceiptError = null"
                     >
                         {{ t('page2.hasReceiptNo') }}
                     </button>
                 </div>
-                <!-- Pesan error kalau belum pilih -->
-                <p v-if="hasReceiptError" class="mt-1 text-xs text-red-500">
+                <p v-if="hasReceiptError" class="survey-error" role="alert">
                     {{ hasReceiptError }}
                 </p>
-            </div>
-
-            <!-- Field receipt & total — hanya muncul kalau pilih Yes -->
-            <template v-if="hasReceipt === true">
-                <div>
-                    <label
-                        class="mb-1 block text-sm font-medium text-[#3B2A20]"
-                    >
-                        {{ t('page2.receiptNumber') }}
-                        <span class="text-red-500">*</span>
-                    </label>
-                    <input
-                        v-model="form.receipt_number"
-                        type="text"
-                        :placeholder="t('page2.receiptPlaceholder')"
-                        class="w-full rounded-lg border border-[#E8D9C3] bg-white px-3 py-2.5 text-sm text-[#3B2A20] placeholder:text-[#C9B79C] focus:ring-2 focus:ring-[#3B2A20]/20 focus:outline-none"
-                    />
-                    <p
-                        v-if="form.errors.receipt_number"
-                        class="mt-1 text-xs text-red-500"
-                    >
-                        {{ form.errors.receipt_number }}
-                    </p>
-                </div>
-
-                <!-- <div>
-                    <label
-                        class="mb-1 block text-sm font-medium text-[#3B2A20]"
-                    >
-                        {{ t('page2.totalPurchase') }}
-                        <span class="text-red-500">*</span>
-                    </label>
-                    <input
-                        v-model.number="form.total_purchase"
-                        type="number"
-                        :placeholder="t('page2.totalPurchasePlaceholder')"
-                        class="w-full rounded-lg border border-[#E8D9C3] bg-white px-3 py-2.5 text-sm text-[#3B2A20] focus:ring-2 focus:ring-[#3B2A20]/20 focus:outline-none"
-                    />
-                </div> -->
-                <div>
-    <label class="mb-1 block text-sm font-medium text-[#3B2A20]">
-        {{ t('page2.totalPurchase') }}
-        <span class="text-red-500">*</span>
-    </label>
-    <input
-        v-model.number="form.total_purchase"
-        type="number"
-        :placeholder="t('page2.totalPurchasePlaceholder')"
-        class="w-full rounded-lg border border-[#E8D9C3] bg-white px-3 py-2.5 text-sm text-[#3B2A20] focus:ring-2 focus:ring-[#3B2A20]/20 focus:outline-none"
-    />
-    <!-- Tambah ini -->
-    <p v-if="form.errors.total_purchase" class="mt-1 text-xs text-red-500">
-        {{ form.errors.total_purchase }}
-    </p>
-</div>
-            </template>
-
-            <!-- Kalau pilih No — tampilkan info kecil -->
-            <div
-                v-if="hasReceipt === false"
-                class="rounded-lg border border-[#E8D9C3] bg-[#FBF3E7] px-4 py-3"
-            >
-                <p class="text-sm text-[#8B5E3C]">
+                <p v-if="hasReceipt === false" class="survey-note">
                     {{ t('page2.noReceiptNote') }}
                 </p>
             </div>
 
-            <div>
-                <label class="mb-1 block text-sm font-medium text-[#3B2A20]">
-                    {{ t('page2.country') }} <span class="text-red-500">*</span>
-                </label>
+            <template v-if="hasReceipt === true">
+                <div class="survey-field">
+                    <label class="survey-label" for="receipt_number">
+                        {{ t('page2.receiptNumber') }}
+                        <span class="survey-required">*</span>
+                    </label>
+                    <input
+                        id="receipt_number"
+                        v-model="form.receipt_number"
+                        name="receipt_number"
+                        type="text"
+                        autocomplete="off"
+                        :placeholder="t('page2.receiptPlaceholder')"
+                        class="survey-input"
+                    />
+                    <p v-if="form.errors.receipt_number" class="survey-error" role="alert">
+                        {{ form.errors.receipt_number }}
+                    </p>
+                </div>
+
+                <div class="survey-field">
+                    <label class="survey-label" for="total_purchase">
+                        {{ t('page2.totalPurchase') }}
+                        <span class="survey-required">*</span>
+                    </label>
+                    <input
+                        id="total_purchase"
+                        v-model.number="form.total_purchase"
+                        name="total_purchase"
+                        type="number"
+                        inputmode="numeric"
+                        :placeholder="t('page2.totalPurchasePlaceholder')"
+                        class="survey-input"
+                    />
+                    <p v-if="form.errors.total_purchase" class="survey-error" role="alert">
+                        {{ form.errors.total_purchase }}
+                    </p>
+                </div>
+            </template>
+
+            <div class="survey-field">
+                <p class="survey-label">
+                    {{ t('page2.country') }} <span class="survey-required">*</span>
+                </p>
                 <Multiselect
                     v-model="form.country"
                     :options="countries"
@@ -227,44 +197,36 @@ function submit(finishNow: boolean) {
                     :placeholder="t('page2.countryPlaceholder')"
                     :searchable="true"
                     :can-clear="false"
-                   :no-options-text="t('page2.noOptions')"
-:no-results-text="t('page2.noResults')"
+                    :no-options-text="t('page2.noOptions')"
+                    :no-results-text="t('page2.noResults')"
                 />
-                <p v-if="form.errors.country" class="mt-1 text-xs text-red-500">
+                <p v-if="form.errors.country" class="survey-error" role="alert">
                     {{ form.errors.country }}
                 </p>
             </div>
 
-            <div>
-                <label class="mb-2 block text-sm font-medium text-[#3B2A20]">
+            <div class="survey-field">
+                <p class="survey-label">
                     {{ t('page2.overallRating') }}
-                    <span class="text-red-500">*</span>
-                </label>
-                <div class="flex items-center gap-2">
+                    <span class="survey-required">*</span>
+                </p>
+                <div class="survey-flowers survey-flowers--large" role="group" :aria-label="t('page2.overallRating')">
                     <button
                         v-for="n in 5"
                         :key="n"
                         type="button"
-                        class="text-3xl transition-transform hover:scale-110"
-                        :class="
-                            n <= (form.overall_rating ?? 0)
-                                ? 'text-[#D4A017]'
-                                : 'text-[#E8D9C3]'
-                        "
+                        class="survey-flower"
+                        :data-on="n <= (form.overall_rating ?? 0)"
+                        :aria-label="`${n} / 5`"
+                        :aria-pressed="n === form.overall_rating"
                         @click="form.overall_rating = n"
-                    >
-                        ★
-                    </button>
+                    />
                 </div>
-                <div class="mt-1 flex justify-between text-xs text-[#8B5E3C]">
+                <div class="survey-scale survey-small">
                     <span>{{ t('page2.veryPoor') }}</span>
                     <span>{{ t('page2.excellent') }}</span>
                 </div>
-                <!-- Tambah ini -->
-                <p
-                    v-if="form.errors.overall_rating"
-                    class="mt-1 text-xs text-red-500"
-                >
+                <p v-if="form.errors.overall_rating" class="survey-error" role="alert">
                     {{ form.errors.overall_rating }}
                 </p>
             </div>
@@ -273,57 +235,19 @@ function submit(finishNow: boolean) {
 </template>
 
 <style>
-/* yang sudah ada sebelumnya */
-.multiselect-option {
-    color: #3b2a20 !important;
-}
-.multiselect-option.is-pointed {
-    background: #3b2a20 !important;
-    color: white !important;
-}
-.multiselect-option.is-selected {
-    background: #e8d9c3 !important;
-    color: #3b2a20 !important;
-}
-.multiselect-option.is-selected.is-pointed {
-    background: #3b2a20 !important;
-    color: white !important;
-}
-
-/* tambahan baru — fix warna teks input & background */
-.multiselect-wrapper {
-    background: white !important;
-}
-.multiselect {
-    background: white !important;
-    border-color: #e8d9c3 !important;
-    border-radius: 0.5rem !important;
-}
-.multiselect.is-open {
-    border-color: #3b2a20 !important;
-    box-shadow: 0 0 0 2px rgba(59, 42, 32, 0.2) !important;
-}
-.multiselect-single-label {
-    color: #3b2a20 !important;
-}
-.multiselect-placeholder {
-    color: #c9b79c !important;
-}
-.multiselect-search {
-    background: white !important;
-    color: #3b2a20 !important;
-}
-.multiselect-search::placeholder {
-    color: #c9b79c !important;
-}
-.multiselect-dropdown {
-    background: white !important;
-    border-color: #e8d9c3 !important;
-    border-radius: 0.5rem !important;
-}
-.multiselect-caret {
-    color: #8b5e3c !important;
-}
+.multiselect-option { color: var(--color-ink) !important; }
+.multiselect-option.is-pointed { background: var(--color-ink) !important; color: var(--color-paper) !important; }
+.multiselect-option.is-selected { background: var(--color-paper-3) !important; color: var(--color-ink) !important; }
+.multiselect-option.is-selected.is-pointed { background: var(--color-ink) !important; color: var(--color-paper) !important; }
+.multiselect-wrapper { min-height: 3rem; background: var(--color-paper-2) !important; }
+.multiselect { min-height: 3rem; background: var(--color-paper-2) !important; border-color: var(--color-ink) !important; border-radius: 0 !important; font-size: 1rem; }
+.multiselect.is-open, .multiselect.is-active { border-color: var(--color-ink) !important; box-shadow: none !important; outline: 2px solid var(--color-focus); outline-offset: -3px; }
+.multiselect-single-label { color: var(--color-ink) !important; }
+.multiselect-placeholder { color: var(--color-ink-3) !important; }
+.multiselect-search { background: var(--color-paper-2) !important; color: var(--color-ink) !important; border-radius: 0 !important; }
+.multiselect-search::placeholder { color: var(--color-ink-3) !important; }
+.multiselect-dropdown { background: var(--color-paper-2) !important; border-color: var(--color-ink) !important; border-radius: 0 !important; }
+.multiselect-caret { background-color: var(--color-ink-2) !important; }
 </style>
 <!-- Pertanyaan struk — tampil selalu -->
 <!-- <div>

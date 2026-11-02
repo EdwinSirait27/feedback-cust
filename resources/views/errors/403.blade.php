@@ -1,6 +1,9 @@
-<div class="error-code">403</div>
-<h1 class="title">Access Denied</h1>
-<p class="subtitle">
-    You do not have permission to<br>
-    to access this page.
-</p>
+@extends('errors.layout')
+
+@section('title', 'Access Denied')
+@section('code', '403')
+@section('heading', 'Access Denied')
+
+@section('message')
+    You do not have permission to access this page.
+@endsection

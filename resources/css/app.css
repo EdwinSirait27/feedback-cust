@@ -1,6 +1,15 @@
+/* Hallmark · shape: app screen · genre: editorial · theme: Solstice (deal 1/3, seed guest-feedback-survey-bali-dbf3·39aa9b56·2026-11-02·r0) · redesign: full
+ * nav: logo and page progress, the project's own shell · signature: rating with the logo's frangipani, a wheel in the brand's colours · states: empty, selected, error, processing, spinning, won, no prize · solstice: long-light, dusk on the wheel
+ * axes: light/high-contrast-serif/warm · posture: restrained · contrast: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S4 R4 V4 · weakest: S, cream and serif could be anyone's; the real logo, its flower as the rating mark and the wheel in its gold carry the identity */
+/* Hallmark · dismissed F4 · the wheel button and the survey button never share a screen, each page has one filled action */
+/* Hallmark · dismissed 49 · six languages run these labels up to 55 characters, so the survey controls wrap instead of clipping */
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
+@import './tokens.css';
+@import './base.css' layer(base);
+@import './survey.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -8,10 +17,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --font-sans:
-        Instrument Sans, ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+    --font-sans: var(--font-body);
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -79,87 +85,77 @@
     }
 }
 
-@layer utilities {
-    body,
-    html {
-        --font-sans:
-            'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-            'Noto Color Emoji';
-    }
-}
-
 :root {
-    --background: hsl(0 0% 100%);
-    --foreground: hsl(0 0% 3.9%);
-    --card: hsl(0 0% 100%);
-    --card-foreground: hsl(0 0% 3.9%);
-    --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(0 0% 3.9%);
-    --primary: hsl(0 0% 9%);
-    --primary-foreground: hsl(0 0% 98%);
-    --secondary: hsl(0 0% 92.1%);
-    --secondary-foreground: hsl(0 0% 9%);
-    --muted: hsl(0 0% 96.1%);
-    --muted-foreground: hsl(0 0% 45.1%);
-    --accent: hsl(0 0% 96.1%);
-    --accent-foreground: hsl(0 0% 9%);
-    --destructive: hsl(0 84.2% 60.2%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 92.8%);
-    --input: hsl(0 0% 89.8%);
-    --ring: hsl(0 0% 3.9%);
-    --chart-1: hsl(12 76% 61%);
-    --chart-2: hsl(173 58% 39%);
-    --chart-3: hsl(197 37% 24%);
-    --chart-4: hsl(43 74% 66%);
-    --chart-5: hsl(27 87% 67%);
-    --radius: 0.5rem;
-    --sidebar-background: hsl(0 0% 98%);
-    --sidebar-foreground: hsl(240 5.3% 26.1%);
-    --sidebar-primary: hsl(0 0% 10%);
-    --sidebar-primary-foreground: hsl(0 0% 98%);
-    --sidebar-accent: hsl(0 0% 94%);
-    --sidebar-accent-foreground: hsl(0 0% 30%);
-    --sidebar-border: hsl(0 0% 91%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(0 0% 98%);
+    --background: var(--color-paper);
+    --foreground: var(--color-ink);
+    --card: var(--color-paper-2);
+    --card-foreground: var(--color-ink);
+    --popover: var(--color-paper-2);
+    --popover-foreground: var(--color-ink);
+    --primary: var(--color-signal);
+    --primary-foreground: var(--color-signal-ink);
+    --secondary: var(--color-paper-3);
+    --secondary-foreground: var(--color-ink);
+    --muted: var(--color-paper-3);
+    --muted-foreground: var(--color-ink-3);
+    --accent: var(--color-paper-3);
+    --accent-foreground: var(--color-ink);
+    --destructive: var(--color-error);
+    --destructive-foreground: var(--color-signal-ink);
+    --border: var(--color-rule);
+    --input: var(--color-ink-3);
+    --ring: var(--color-focus);
+    --chart-1: var(--color-signal);
+    --chart-2: var(--color-gold-deep);
+    --chart-3: var(--color-ink);
+    --chart-4: var(--color-gold);
+    --chart-5: var(--color-ink-3);
+    --radius: 0.125rem;
+    --sidebar-background: var(--color-paper-2);
+    --sidebar-foreground: var(--color-ink);
+    --sidebar-primary: var(--color-ink);
+    --sidebar-primary-foreground: var(--color-paper);
+    --sidebar-accent: var(--color-paper-3);
+    --sidebar-accent-foreground: var(--color-ink);
+    --sidebar-border: var(--color-rule);
+    --sidebar-ring: var(--color-focus);
+    --sidebar: var(--color-paper-2);
 }
 
 .dark {
-    --background: hsl(0 0% 3.9%);
-    --foreground: hsl(0 0% 98%);
-    --card: hsl(0 0% 3.9%);
-    --card-foreground: hsl(0 0% 98%);
-    --popover: hsl(0 0% 3.9%);
-    --popover-foreground: hsl(0 0% 98%);
-    --primary: hsl(0 0% 98%);
-    --primary-foreground: hsl(0 0% 9%);
-    --secondary: hsl(0 0% 14.9%);
-    --secondary-foreground: hsl(0 0% 98%);
-    --muted: hsl(0 0% 16.08%);
-    --muted-foreground: hsl(0 0% 63.9%);
-    --accent: hsl(0 0% 14.9%);
-    --accent-foreground: hsl(0 0% 98%);
-    --destructive: hsl(0 84% 60%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 14.9%);
-    --input: hsl(0 0% 14.9%);
-    --ring: hsl(0 0% 83.1%);
-    --chart-1: hsl(220 70% 50%);
-    --chart-2: hsl(160 60% 45%);
-    --chart-3: hsl(30 80% 55%);
-    --chart-4: hsl(280 65% 60%);
-    --chart-5: hsl(340 75% 55%);
-    --sidebar-background: hsl(0 0% 7%);
-    --sidebar-foreground: hsl(0 0% 95.9%);
-    --sidebar-primary: hsl(360, 100%, 100%);
-    --sidebar-primary-foreground: hsl(0 0% 100%);
-    --sidebar-accent: hsl(0 0% 15.9%);
-    --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-    --sidebar-border: hsl(0 0% 15.9%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(240 5.9% 10%);
+    --background: var(--color-dusk);
+    --foreground: var(--color-paper);
+    --card: var(--color-dusk-2);
+    --card-foreground: var(--color-paper);
+    --popover: var(--color-dusk-2);
+    --popover-foreground: var(--color-paper);
+    --primary: var(--color-paper);
+    --primary-foreground: var(--color-ink);
+    --secondary: var(--color-dusk-2);
+    --secondary-foreground: var(--color-paper);
+    --muted: var(--color-dusk-2);
+    --muted-foreground: var(--color-dusk-ink);
+    --accent: var(--color-dusk-2);
+    --accent-foreground: var(--color-paper);
+    --destructive: var(--color-signal);
+    --destructive-foreground: var(--color-signal-ink);
+    --border: var(--color-dusk-2);
+    --input: var(--color-dusk-ink);
+    --ring: var(--color-focus-dusk);
+    --chart-1: var(--color-gold-2);
+    --chart-2: var(--color-gold);
+    --chart-3: var(--color-signal);
+    --chart-4: var(--color-dusk-ink);
+    --chart-5: var(--color-paper-3);
+    --sidebar-background: var(--color-ink);
+    --sidebar-foreground: var(--color-paper);
+    --sidebar-primary: var(--color-paper);
+    --sidebar-primary-foreground: var(--color-ink);
+    --sidebar-accent: var(--color-dusk-2);
+    --sidebar-accent-foreground: var(--color-paper);
+    --sidebar-border: var(--color-dusk-2);
+    --sidebar-ring: var(--color-focus-dusk);
+    --sidebar: var(--color-ink);
 }
 
 @layer base {

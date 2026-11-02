@@ -1,0 +1,36 @@
+@theme static {
+  --color-paper: oklch(94% 0.03 80); --color-paper-2: oklch(97% 0.02 85); --color-paper-3: oklch(89% 0.05 80);
+  --color-ink: oklch(27% 0.05 50); --color-ink-2: oklch(36% 0.05 50); --color-ink-3: oklch(48% 0.06 55);
+  --color-rule: oklch(84% 0.06 78);
+  --color-signal: oklch(54% 0.20 24); --color-signal-ink: oklch(97% 0.02 85); --color-focus: oklch(54% 0.20 24);
+  --color-gold: oklch(74% 0.14 75); --color-gold-2: oklch(84% 0.11 80); --color-gold-deep: oklch(44% 0.10 72);
+  --color-petal: oklch(62% 0.06 78);
+  --color-dusk: oklch(27% 0.05 40); --color-dusk-2: oklch(35% 0.05 40); --color-dusk-ink: oklch(82% 0.04 80); --color-focus-dusk: oklch(84% 0.11 80);
+  --color-error: oklch(48% 0.19 27); --color-success: oklch(50% 0.12 150);
+  --font-display: "Yeseva One", ui-serif, Georgia, "Songti SC", "Noto Serif CJK SC", "Hiragino Mincho ProN", "Noto Serif KR", serif;
+  --font-body: "Archivo", ui-sans-serif, system-ui, "PingFang SC", "Hiragino Sans", "Apple SD Gothic Neo", "Noto Sans CJK SC", sans-serif;
+  --font-outlier: "Archivo Narrow", "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 0; --radius-pill: 999px;
+  --shadow-card: 10px 10px 0 var(--color-paper-3);
+}
+
+:root {
+  color-scheme: light;
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-md: 1rem;
+  --text-display-s: 1.44rem; --text-display: 1.728rem; --text-section: 1.2rem; --text-title: 1rem; --text-lead: 1rem;
+  --text-survey-title: clamp(1.75rem, 8.4vw, 2rem); --text-survey-hero: 2.5rem; --text-survey-figure: 2.75rem;
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --container: 72rem; --gutter: 16px; --gap-columns: 16px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+  --rule-hair: 1px; --rule-bar: 2px;
+  --tracking-display: -0.005em; --display-weight: 400;
+}
+
+@media (min-width: 40rem) {
+  :root { --gutter: 24px; }
+}
+
+@media (min-width: 64rem) {
+  :root { --gutter: 64px; --gap-columns: 32px; --text-survey-title: 2.5rem; --text-survey-hero: 4.25rem; --text-survey-figure: 4rem; }
+}

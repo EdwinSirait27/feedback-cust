@@ -94,9 +94,11 @@ const form = useForm({
 function submit() {
     if (isSubmitting.value) return
     isSubmitting.value = true
+    form.clearErrors()
     router.post(updateStep(7).url, form.data(), {
-        preserveState: false,
-        preserveScroll: false,
+        preserveState: 'errors',
+        preserveScroll: 'errors',
+        onError: (errors) => form.setError(errors),
         onFinish: () => { isSubmitting.value = false },
     })
 }
@@ -112,28 +114,24 @@ function submit() {
         :loading="form.processing || isSubmitting"
         @finish="submit"
     >
-        <div class="space-y-5">
-            <div>
-                <label class="mb-2 block text-sm font-medium text-[#3B2A20]">
+        <div>
+            <div class="survey-field">
+                <p class="survey-label">
                     {{ t('page7.mayContact') }}
-                </label>
-                <div class="flex gap-3">
+                </p>
+                <div class="survey-choices">
                     <button
                         type="button"
-                        class="rounded-lg border px-4 py-2 text-sm font-medium"
-                        :class="form.may_contact
-                            ? 'border-[#3B2A20] bg-[#3B2A20] text-white'
-                            : 'border-[#E8D9C3] text-[#8B5E3C] hover:bg-[#F3E4CC]'"
+                        class="survey-choice"
+                        :aria-pressed="form.may_contact"
                         @click="form.may_contact = true"
                     >
                         {{ t('page7.yes') }}
                     </button>
                     <button
                         type="button"
-                        class="rounded-lg border px-4 py-2 text-sm font-medium"
-                        :class="!form.may_contact
-                            ? 'border-[#3B2A20] bg-[#3B2A20] text-white'
-                            : 'border-[#E8D9C3] text-[#8B5E3C] hover:bg-[#F3E4CC]'"
+                        class="survey-choice"
+                        :aria-pressed="!form.may_contact"
                         @click="form.may_contact = false"
                     >
                         {{ t('page7.no') }}
@@ -142,45 +140,58 @@ function submit() {
             </div>
 
             <template v-if="form.may_contact">
-                <div>
-                    <label class="mb-1 block text-sm font-medium text-[#3B2A20]">
+                <div class="survey-field">
+                    <label class="survey-label" for="full_name">
                         {{ t('page7.fullName') }}
                     </label>
                     <input
+                        id="full_name"
                         v-model="form.full_name"
+                        name="full_name"
                         type="text"
-                        class="w-full rounded-lg border border-[#E8D9C3] bg-white px-3 py-2.5 text-sm text-[#3B2A20] placeholder:text-[#C9B79C] focus:outline-none focus:ring-2 focus:ring-[#3B2A20]/20"
+                        autocomplete="name"
+                        class="survey-input"
                     />
-                    <p v-if="form.errors.full_name" class="mt-1 text-xs text-red-500">
+                    <p v-if="form.errors.full_name" class="survey-error" role="alert">
                         {{ form.errors.full_name }}
                     </p>
                 </div>
 
-                <div>
-                    <label class="mb-1 block text-sm font-medium text-[#3B2A20]">
+                <div class="survey-field">
+                    <label class="survey-label" for="email">
                         {{ t('page7.email') }}
                     </label>
                     <input
+                        id="email"
                         v-model="form.email"
+                        name="email"
                         type="email"
+                        autocomplete="email"
                         placeholder="email@contoh.com"
-                        class="w-full rounded-lg border border-[#E8D9C3] bg-white px-3 py-2.5 text-sm text-[#3B2A20] placeholder:text-[#C9B79C] focus:outline-none focus:ring-2 focus:ring-[#3B2A20]/20"
+                        class="survey-input"
                     />
-                    <p v-if="form.errors.email" class="mt-1 text-xs text-red-500">
+                    <p v-if="form.errors.email" class="survey-error" role="alert">
                         {{ form.errors.email }}
                     </p>
                 </div>
 
-                <div>
-                    <label class="mb-1 block text-sm font-medium text-[#3B2A20]">
+                <div class="survey-field">
+                    <label class="survey-label" for="whatsapp">
                         {{ t('page7.whatsapp') }}
                     </label>
                     <input
+                        id="whatsapp"
                         v-model="form.whatsapp"
+                        name="whatsapp"
                         type="text"
+                        inputmode="tel"
+                        autocomplete="tel"
                         placeholder="812 3456 7890"
-                        class="w-full rounded-lg border border-[#E8D9C3] bg-white px-3 py-2.5 text-sm text-[#3B2A20] placeholder:text-[#C9B79C] focus:outline-none focus:ring-2 focus:ring-[#3B2A20]/20"
+                        class="survey-input"
                     />
+                    <p v-if="form.errors.whatsapp" class="survey-error" role="alert">
+                        {{ form.errors.whatsapp }}
+                    </p>
                 </div>
             </template>
         </div>

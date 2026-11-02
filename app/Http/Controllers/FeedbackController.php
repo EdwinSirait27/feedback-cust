@@ -2,33 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VoucherMail;
+use App\Models\DailyPrizeQuota;
 use App\Models\Feedback;
 use App\Models\FeedbackSpin;
+use App\Models\JualHead;
 use App\Models\VoucherBelanja;
-use App\Models\DailyPrizeQuota;
+use Carbon\Carbon;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Inertia\Inertia;
-use Inertia\Response;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Models\JualHead;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use Carbon\Carbon;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class FeedbackController extends Controller
 {
     private const TOTAL_STEPS = 7;
+
     private const MIN_REQUIRED_STEP = 2;
+
     private function getCountries(): array
     {
         $raw = require base_path('vendor/umpirsky/country-list/data/en/country.php');
 
         return collect($raw)
-            ->map(fn($name, $code) => ['code' => $code, 'name' => $name])
+            ->map(fn ($name, $code) => ['code' => $code, 'name' => $name])
             ->sortBy('name')
             ->values()
             ->all();
@@ -40,11 +44,12 @@ class FeedbackController extends Controller
 
         return Inertia::render('Feedback/Welcome', [
             'countries' => collect($countries)
-                ->map(fn($name, $code) => ['code' => $code, 'name' => $name])
+                ->map(fn ($name, $code) => ['code' => $code, 'name' => $name])
                 ->sortBy('name')
                 ->values(),
         ]);
     }
+
     public function selectLanguage(Request $request): RedirectResponse
     {
         $data = $request->validate([
@@ -52,12 +57,16 @@ class FeedbackController extends Controller
         ]);
 
         $feedback = $this->currentFeedback() ?? $this->createFeedback($request);
-        $feedback->update(['language' => $data['language'], 'current_step' => 2]);
+        $feedback->update([
+            'language' => $data['language'],
+            'current_step' => max($feedback->current_step, 2),
+        ]);
 
         $request->session()->put('feedback_id', $feedback->id);
 
         return redirect()->route('feedback.step', ['step' => 2]);
     }
+
     public function showStep(int $step): Response|RedirectResponse
     {
         Log::info('showStep', ['step' => $step, 'component' => "Feedback/Page{$step}"]);
@@ -124,9 +133,21 @@ class FeedbackController extends Controller
             $validated['total_purchase'] = $jual->NETTO;
         }
 
-        $feedback->fill($validated);
-        $feedback->advanceStep($step);
-        $feedback->save();
+        try {
+            DB::transaction(function () use ($feedback, $validated, $step) {
+                // Lock supaya submit ganda tidak menghitung poin dua kali
+                $lockedFeedback = Feedback::query()->lockForUpdate()->findOrFail($feedback->id);
+
+                $lockedFeedback->fill($validated);
+                $lockedFeedback->advanceStep($step);
+                $lockedFeedback->save();
+            }, 3);
+        } catch (UniqueConstraintViolationException) {
+            // Nomor struk sudah dipegang feedback lain (unique index feedbacks.receipt_number)
+            throw ValidationException::withMessages([
+                'receipt_number' => __('validation.receipt_used'),
+            ]);
+        }
 
         $wantsToFinishNow = $request->boolean('finish_now');
 
@@ -135,6 +156,7 @@ class FeedbackController extends Controller
             if ($step < 7) {
                 return redirect()->route('feedback.step', ['step' => 7]);
             }
+
             return redirect()->route('feedback.spin');
         }
 
@@ -151,53 +173,54 @@ class FeedbackController extends Controller
     {
         return match ($step) {
             2 => [
-                'has_receipt'   => ['required', 'boolean'],
+                'has_receipt' => ['required', 'boolean'],
                 'receipt_number' => [
-                    Rule::requiredIf(fn() => $request->boolean('has_receipt')),
+                    Rule::requiredIf(fn () => $request->boolean('has_receipt')),
                     'nullable',
                     'string',
                 ],
                 'total_purchase' => [
-                    Rule::requiredIf(fn() => $request->boolean('has_receipt')),
+                    Rule::requiredIf(fn () => $request->boolean('has_receipt')),
                     'nullable',
                     'integer',
                     'min:0',
                 ],
-                'country'        => ['required', 'string'],
+                'country' => ['required', 'string'],
                 'overall_rating' => ['required', 'integer', 'between:1,5'],
             ],
             3 => [
                 'staff_friendliness' => ['required', 'integer', 'between:1,5'],
-                'staff_helpfulness'  => ['required', 'integer', 'between:1,5'],
-                'checkout_process'   => ['required', 'integer', 'between:1,5'],
-                'service_speed'      => ['required', 'integer', 'between:1,5'],
+                'staff_helpfulness' => ['required', 'integer', 'between:1,5'],
+                'checkout_process' => ['required', 'integer', 'between:1,5'],
+                'service_speed' => ['required', 'integer', 'between:1,5'],
             ],
             4 => [
                 'store_cleanliness' => ['required', 'integer', 'between:1,5'],
-                'store_ambience'    => ['required', 'integer', 'between:1,5'],
-                'product_display'   => ['required', 'integer', 'between:1,5'],
-                'product_variety'   => ['required', 'integer', 'between:1,5'],
+                'store_ambience' => ['required', 'integer', 'between:1,5'],
+                'product_display' => ['required', 'integer', 'between:1,5'],
+                'product_variety' => ['required', 'integer', 'between:1,5'],
             ],
             5 => [
-                'product_quality'       => ['required', 'integer', 'between:1,5'],
-                'product_design'        => ['required', 'integer', 'between:1,5'],
+                'product_quality' => ['required', 'integer', 'between:1,5'],
+                'product_design' => ['required', 'integer', 'between:1,5'],
                 'price_appropriateness' => ['required', 'integer', 'between:1,5'],
-                'value_for_money'       => ['required', 'integer', 'between:1,5'],
+                'value_for_money' => ['required', 'integer', 'between:1,5'],
             ],
             6 => [
-                'like_most'              => ['nullable', 'string', 'max:1000'],
+                'like_most' => ['nullable', 'string', 'max:1000'],
                 'improvement_suggestion' => ['nullable', 'string', 'max:1000'],
-                'recommend_likelihood'   => ['required', 'integer', 'between:0,10'],
+                'recommend_likelihood' => ['required', 'integer', 'between:0,10'],
             ],
             7 => [
                 'may_contact' => ['required', 'boolean'],
-                'full_name'   => ['nullable', 'string', 'max:255', 'required_if:may_contact,true'],
-                'email'       => ['nullable', 'email', 'required_if:may_contact,true'],
-                'whatsapp'    => ['nullable', 'string', 'max:20'],
+                'full_name' => ['nullable', 'string', 'max:255', 'required_if:may_contact,true'],
+                'email' => ['nullable', 'email', 'required_if:may_contact,true'],
+                'whatsapp' => ['nullable', 'string', 'max:20'],
             ],
             default => [],
         };
     }
+
     public function spinPage(): Response|RedirectResponse
     {
         $feedback = $this->currentFeedback();
@@ -212,80 +235,46 @@ class FeedbackController extends Controller
         ]);
     }
 
-
-    // public function spin(): RedirectResponse
-    // {
-    //     $feedback = $this->currentFeedback();
-
-    //     abort_if(! $feedback || $feedback->current_step <= self::MIN_REQUIRED_STEP, 403, 'Data wajib belum lengkap.');
-    //     abort_if($feedback->spin()->exists(), 409, 'Sudah pernah spin.');
-
-    //     DB::transaction(function () use ($feedback) {
-    //         $prize = $this->rollPrize($feedback->current_step);
-
-    //         $voucherCode = $prize['amount'] ? $this->generateVoucherCode() : null;
-
-    //         $spin = $feedback->spin()->create([
-    //             'prize_type'     => $prize['type'],
-    //             'voucher_code'   => $voucherCode,
-    //             'voucher_amount' => $prize['amount'],
-    //             'spun_at'        => now(),
-    //         ]);
-
-    //         // Simpan ke voucher_belanja di database kasir kalau menang
-    //         if ($prize['amount'] && $voucherCode) {
-    //             VoucherBelanja::create([
-    //                 'NO_VCHR'       => $voucherCode,
-    //                 'ID'            => 'System',
-    //                 'TGL'           => Carbon::today()->toDateString(),
-    //                 'EXPIRED'       => Carbon::today()->addDay()->toDateString(),
-    //                 'MEMBER'        => '-',
-    //                 'KET'           => 'Voucher Feedback ' . number_format($prize['amount'], 0, ',', '.'),
-    //                 'NILAI_VOUCHER' => $prize['amount'],
-    //                 'TARIK'         => 0,
-    //                 'NO_EJB'        => 0,
-    //                 'TGLTRX'        => null,
-    //                 'BO'            => 'B01',
-    //                 'NO_EJ'         => '-',
-    //             ]);
-    //         }
-
-    //         if ($prize['type'] !== 'no_prize') {
-    //             $quota = DailyPrizeQuota::today();
-    //             $quota->addUsed($prize['type']);
-    //         }
-
-
-    //         $feedback->update(['completed_at' => now()]);
-
-    //         // Kirim email kalau menang dan ada email
-    //         if ($prize['amount'] && $feedback->email) {
-    //             Mail::to($feedback->email)->queue(new \App\Mail\VoucherMail($feedback, $spin));
-    //         }
-    //     });
-
-    //     return redirect()->route('feedback.spin');
-    // }
     public function spin(): RedirectResponse
-{
-    $feedback = $this->currentFeedback();
+    {
+        $feedback = $this->currentFeedback();
 
-    abort_if(! $feedback || $feedback->current_step <= self::MIN_REQUIRED_STEP, 403, 'Data wajib belum lengkap.');
-    abort_if($feedback->spin()->exists(), 409, 'Sudah pernah spin.');
+        abort_if(! $feedback || $feedback->current_step <= self::MIN_REQUIRED_STEP, 403, 'Data wajib belum lengkap.');
 
-         // Double-check sebelum masuk transaction
-    if ($feedback->spin()->exists()) {
+        if ($feedback->spin()->exists()) {
+            return redirect()->route('feedback.spin');
+        }
+
+        // Buat row quota di luar transaction: lock pada row yang belum ada memicu deadlock di MySQL
+        DailyPrizeQuota::today();
+
+        try {
+            DB::transaction(fn () => $this->performSpin($feedback->id), 3);
+        } catch (UniqueConstraintViolationException) {
+            // Spin ganda ditahan unique index feedback_spins.feedback_id; hasil spin pertama tetap dipakai
+        }
+
         return redirect()->route('feedback.spin');
     }
 
-    DB::transaction(function () use ($feedback) {
-        // Lock row quota hari ini supaya tidak ada race condition
-        $quota = DailyPrizeQuota::lockForUpdate()->firstOrCreate(
-            ['date' => Carbon::today()->toDateString()],
-            ['voucher_100k_used' => 0, 'voucher_50k_used' => 0, 'voucher_25k_used' => 0]
-        );
+    /**
+     * Voucher ditulis terakhir karena DB kasir berada di luar transaction ini dan tidak ikut rollback.
+     */
+    private function performSpin(int $feedbackId): void
+    {
+        // Urutan lock selalu feedback lalu quota supaya request paralel tidak saling deadlock
+        $feedback = Feedback::query()->lockForUpdate()->findOrFail($feedbackId);
 
-        $prize = $this->rollPrize($feedback->current_step);
+        if ($feedback->spin()->exists()) {
+            return;
+        }
+
+        $quota = DailyPrizeQuota::query()
+            ->whereDate('date', Carbon::today())
+            ->lockForUpdate()
+            ->firstOrFail();
+
+        $prize = $this->rollPrize($feedback->hasAnsweredThroughStepSix());
 
         // Validasi ulang quota di dalam lock — ini yang cegah race condition
         if ($prize['type'] !== 'no_prize') {
@@ -298,28 +287,11 @@ class FeedbackController extends Controller
         $voucherCode = $prize['amount'] ? $this->generateVoucherCode() : null;
 
         $spin = $feedback->spin()->create([
-            'prize_type'     => $prize['type'],
-            'voucher_code'   => $voucherCode,
+            'prize_type' => $prize['type'],
+            'voucher_code' => $voucherCode,
             'voucher_amount' => $prize['amount'],
-            'spun_at'        => now(),
+            'spun_at' => now(),
         ]);
-
-        if ($prize['amount'] && $voucherCode) {
-            VoucherBelanja::create([
-                'NO_VCHR'       => $voucherCode,
-                'ID'            => 'System',
-                'TGL'           => Carbon::today()->toDateString(),
-                'EXPIRED'       => Carbon::today()->addDays(30)->toDateString(),
-                'MEMBER'        => $feedback->full_name ?? '-',
-                'KET'           => 'Voucher Feedback ' . number_format($prize['amount'], 0, ',', '.'),
-                'NILAI_VOUCHER' => $prize['amount'],
-                'TARIK'         => 0,
-                'NO_EJB'        => 0,
-                'TGLTRX'        => null,
-                'BO'            => 'B01',
-                'NO_EJ'         => $feedback->receipt_number ?? '-',
-            ]);
-        }
 
         if ($prize['type'] !== 'no_prize') {
             $quota->addUsed($prize['type']);
@@ -327,13 +299,27 @@ class FeedbackController extends Controller
 
         $feedback->update(['completed_at' => now()]);
 
-        if ($prize['amount'] && $feedback->email) {
-            Mail::to($feedback->email)->queue(new \App\Mail\VoucherMail($feedback, $spin));
+        if ($prize['amount'] && $voucherCode) {
+            VoucherBelanja::create([
+                'NO_VCHR' => $voucherCode,
+                'ID' => 'system',
+                'TGL' => Carbon::today()->toDateString(),
+                'EXPIRED' => Carbon::today()->addDays(30)->toDateString(),
+                'MEMBER' => '-',
+                'KET' => 'Voucher Feedback '.number_format($prize['amount'], 0, ',', '.'),
+                'NILAI_VOUCHER' => $prize['amount'],
+                'TARIK' => 0,
+                'NO_EJB' => null,
+                'TGLTRX' => null,
+                'BO' => 'B01',
+                'NO_EJ' => '-',
+            ]);
         }
-    });
 
-    return redirect()->route('feedback.spin');
-}
+        if ($prize['amount'] && $feedback->email) {
+            DB::afterCommit(fn () => Mail::to($feedback->email)->queue(new VoucherMail($feedback, $spin)));
+        }
+    }
 
     public function result(): Response|RedirectResponse
     {
@@ -363,95 +349,37 @@ class FeedbackController extends Controller
         ]);
     }
 
+    private function rollPrize(bool $canWinTopPrize): array
+    {
+        $todayFeedbackCount = Feedback::whereNotNull('completed_at')
+            ->whereDate('completed_at', Carbon::today())
+            ->count();
 
+        $eligiblePrizes = [];
 
-
-    // private function rollPrize(int $currentStep): array
-    // {
-    //     $quota = DailyPrizeQuota::today();
-
-    //     // Hitung total feedback yang sudah completed hari ini
-    //     $todayFeedbackCount = Feedback::whereNotNull('completed_at')
-    //         ->whereDate('completed_at', Carbon::today())
-    //         ->count();
-
-    //     // Tentukan prize pool yang eligible
-    //     $eligiblePrizes = [];
-
-    //     if ($currentStep >= 6) {
-    //         // Step 6+ eligible semua prize
-    //         // 100k hanya eligible kalau sudah ada 100 feedback hari ini
-    //         if ($todayFeedbackCount >= 100 && $quota->remaining('voucher_100k') > 0) {
-    //             $eligiblePrizes[] = ['type' => 'voucher_100k', 'amount' => 100000, 'weight' => 5];
-    //         }
-    //         if ($quota->remaining('voucher_50k') > 0) {
-    //             $eligiblePrizes[] = ['type' => 'voucher_50k', 'amount' => 50000, 'weight' => 15];
-    //         }
-    //         if ($quota->remaining('voucher_25k') > 0) {
-    //             $eligiblePrizes[] = ['type' => 'voucher_25k', 'amount' => 25000, 'weight' => 30];
-    //         }
-    //     } else {
-    //         // Step 2–5 hanya eligible 25k dan 50k
-    //         if ($quota->remaining('voucher_50k') > 0) {
-    //             $eligiblePrizes[] = ['type' => 'voucher_50k', 'amount' => 50000, 'weight' => 15];
-    //         }
-    //         if ($quota->remaining('voucher_25k') > 0) {
-    //             $eligiblePrizes[] = ['type' => 'voucher_25k', 'amount' => 25000, 'weight' => 30];
-    //         }
-    //     }
-    //     // Roll dengan weighted random
-    //     $roll = random_int(1, 100);
-    //     $totalWeight = array_sum(array_column($eligiblePrizes, 'weight'));
-
-    //     if (! empty($eligiblePrizes) && $roll <= $totalWeight) {
-    //         // Weighted pick
-    //         $rand = random_int(1, $totalWeight);
-    //         $cumulative = 0;
-    //         foreach ($eligiblePrizes as $prize) {
-    //             $cumulative += $prize['weight'];
-    //             if ($rand <= $cumulative) {
-    //                 return $prize;
-    //             }
-    //         }
-    //     }
-
-    //     return ['type' => 'no_prize', 'amount' => null];
-    // }
-    private function rollPrize(int $currentStep): array
-{
-    $todayFeedbackCount = Feedback::whereNotNull('completed_at')
-        ->whereDate('completed_at', Carbon::today())
-        ->count();
-
-    $eligiblePrizes = [];
-
-    if ($currentStep >= 6) {
-        if ($todayFeedbackCount >= 100) {
+        if ($canWinTopPrize && $todayFeedbackCount >= 100) {
             $eligiblePrizes[] = ['type' => 'voucher_100k', 'amount' => 100000, 'weight' => 5];
         }
+
         $eligiblePrizes[] = ['type' => 'voucher_50k', 'amount' => 50000, 'weight' => 15];
         $eligiblePrizes[] = ['type' => 'voucher_25k', 'amount' => 25000, 'weight' => 30];
-    } else {
-        $eligiblePrizes[] = ['type' => 'voucher_50k', 'amount' => 50000, 'weight' => 15];
-        $eligiblePrizes[] = ['type' => 'voucher_25k', 'amount' => 25000, 'weight' => 30];
-    }
 
-    $roll = random_int(1, 100);
-    $totalWeight = array_sum(array_column($eligiblePrizes, 'weight'));
+        $roll = random_int(1, 100);
+        $totalWeight = array_sum(array_column($eligiblePrizes, 'weight'));
 
-    if (! empty($eligiblePrizes) && $roll <= $totalWeight) {
-        $rand = random_int(1, $totalWeight);
-        $cumulative = 0;
-        foreach ($eligiblePrizes as $prize) {
-            $cumulative += $prize['weight'];
-            if ($rand <= $cumulative) {
-                return $prize;
+        if (! empty($eligiblePrizes) && $roll <= $totalWeight) {
+            $rand = random_int(1, $totalWeight);
+            $cumulative = 0;
+            foreach ($eligiblePrizes as $prize) {
+                $cumulative += $prize['weight'];
+                if ($rand <= $cumulative) {
+                    return $prize;
+                }
             }
         }
-    }
 
-    return ['type' => 'no_prize', 'amount' => null];
-}
+        return ['type' => 'no_prize', 'amount' => null];
+    }
 
     private function generateVoucherCode(): string
     {
@@ -461,11 +389,12 @@ class FeedbackController extends Controller
 
         return $code;
     }
-    public function done(Request $request): RedirectResponse
-{
-    // Hapus session feedback aktif supaya user bisa mulai baru
-    $request->session()->forget('feedback_id');
 
-    return redirect()->route('home');
-}
+    public function done(Request $request): RedirectResponse
+    {
+        // Hapus session feedback aktif supaya user bisa mulai baru
+        $request->session()->forget('feedback_id');
+
+        return redirect()->route('home');
+    }
 }
