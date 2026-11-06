@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\URL;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -76,6 +78,9 @@ class AppServiceProvider extends ServiceProvider
                         ->with('error', 'Too many attempts. Try again later.');
                 });
         });
+         if ($this->app->isProduction()) {
+        URL::forceScheme('https');
+    }
     }
 
     /**
