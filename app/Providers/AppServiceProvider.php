@@ -23,28 +23,6 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
-    // public function boot(): void
-    // {
-    //     RateLimiter::for('spin', function (Request $request) {
-    //         return [
-    //             Limit::perDay(1)
-    //                 ->by($request->session()->get('feedback_id'))
-    //                 ->response(fn() => response()->json(['message' => 'Sudah spin hari ini.'], 429)),
-
-    //             Limit::perMinute(5)
-    //                 ->by($request->ip())
-    //                 ->response(fn() => response()->json(['message' => 'Terlalu banyak percobaan.'], 429)),
-    //         ];
-    //     });
-
-    //     RateLimiter::for('feedback-step', function (Request $request) {
-    //         return Limit::perMinute(30)
-    //             ->by($request->session()->get('feedback_id') ?? $request->ip());
-    //     });
-    // }
     public function boot(): void
     {
         // Limiter bernama punya hitungan sendiri; throttle:N,M tanpa nama berbagi satu hitungan per IP
